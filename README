@@ -1,1 +1,6 @@
 My Blog based in ZF2
+- Minimum function with
+  + manager content type
+  + manager content status
+  + manager content
+  + manager category
