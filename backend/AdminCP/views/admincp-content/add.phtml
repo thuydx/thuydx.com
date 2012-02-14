@@ -332,11 +332,15 @@ select.categorySelectBox {
 			<div class="cleared">&nbsp;</div>
 			
 			<label class="cform">Summary:</label>
-			<textarea name="summary" id="summery" row="5" class="cform"> </textarea>
+            <div style="float: left; z-index:999">
+			<?php echo $this->ckeditor('summary')?>
+			</div>
 			<div class="cleared">&nbsp;</div>
 			
 			<label class="cform">Content:</label>
-			<textarea name="content" id="content" style="height: 200px;" class="cform"></textarea>
+            <div style="float: left; z-index:999">
+			<?php echo $this->ckeditor('content')?>
+			</div>
 			<div class="cleared">&nbsp;</div>
 			
 			<label class="cform">Content Type:</label> 
