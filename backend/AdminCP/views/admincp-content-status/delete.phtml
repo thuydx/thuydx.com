@@ -1,0 +1,18 @@
+<?php
+	$title = 'Delete Status';
+	$this->headTitle($title);
+?>
+<h1><?php echo $this->escape($title); ?></h1>
+<p>Are you sure that you want to delete
+'<?php echo $this->escape($contentStatus['status_title']); ?>'?
+</p>
+<?php
+$url = $this->url('default',
+array('controller' => 'admincp-content-status', 'action' => 'delete')); ?>
+<form action="<?php echo $url; ?>" method="post">
+<div>
+<input type="hidden" name="id" value="<?php echo (int)$contentStatus['content_status_id']; ?>" />
+<input type="submit" name="del" value="Yes" />
+<input type="submit" name="del" value="No" />
+</div>
+</form>

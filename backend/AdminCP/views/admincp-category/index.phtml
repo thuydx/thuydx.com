@@ -1,0 +1,49 @@
+<?php
+	$title = 'Category Listing';
+	$this->headTitle($title);
+?>
+<h1><?php echo $this->escape($title); ?></h1>
+<p><a href="<?php echo $this->url('default', array('controller'=>'admincp-category',
+'action'=>'add'));?>">Add new Category</a></p>
+<table>
+<tr>
+<th>#</th>
+<th>Title</th>
+<th>Description</th>
+<th>Meta Title</th>
+<th>Meta Description</th>
+<th>Meta Keyword</th>
+<th>Icon</th>
+<th>Password</th>
+<th>Visit</th>
+<th>Content Count</th>
+<th>Url</th>
+<th>Hide from Menu</th>
+<th>Order</th>
+</tr>
+<?php foreach($categories as $category) : ?>
+<tr>
+<td><?php echo $this->escape($category->category_id);?></td>
+<td><?php echo $this->escape($category->category_title);?></td>
+<td><?php echo $this->escape($category->category_description);?></td>
+<td><?php echo $this->escape($category->category_meta_title);?></td>
+<td><?php echo $this->escape($category->category_meta_description);?></td>
+<td><?php echo $this->escape($category->category_meta_keyword);?></td>
+<td><?php echo $this->escape($category->category_icon);?></td>
+<td><?php echo $this->escape($category->category_password);?></td>
+<td><?php echo $this->escape($category->category_visit);?></td>
+<td><?php echo $this->escape($category->content_count);?></td>
+<td><?php echo $this->escape($category->general_url);?></td>
+<td><?php echo $this->escape($category->hide_form_menu);?></td>
+<td><?php echo $this->escape($category->sort_order);?></td>
+<td>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-category','action'=>'edit'))
+. '?id=' . $category->category_id ;?>">Edit</a>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-category','action'=>'delete'))
+. '?id=' . $category->category_id ;?>">Delete</a>
+</td>
+</tr>
+<?php endforeach; ?>
+</table>

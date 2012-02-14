@@ -1,0 +1,28 @@
+<?php
+	$title = 'Content Status Listing';
+	$this->headTitle($title);
+?>
+<h1><?php echo $this->escape($title); ?></h1>
+<p><a href="<?php echo $this->url('default', array('controller'=>'admincp-content-status',
+'action'=>'add'));?>">Add new Status</a></p>
+<table>
+<tr>
+<th>#</th>
+<th>Title</th>
+<th>&nbsp;</th>
+</tr>
+<?php foreach($contentStatus as $status) : ?>
+<tr>
+<td><?php echo $this->escape($status->content_status_id);?></td>
+<td><?php echo $this->escape($status->status_title);?></td>
+<td>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-content-status','action'=>'edit'))
+. '?id=' . $status->content_status_id ;?>">Edit</a>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-content-status','action'=>'delete'))
+. '?id=' . $status->content_status_id ;?>">Delete</a>
+</td>
+</tr>
+<?php endforeach; ?>
+</table>

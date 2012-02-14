@@ -1,0 +1,28 @@
+<?php
+	$title = 'Content Type Listing';
+	$this->headTitle($title);
+?>
+<h1><?php echo $this->escape($title); ?></h1>
+<p><a href="<?php echo $this->url('default', array('controller'=>'admincp-content-type',
+'action'=>'add'));?>">Add new Content Type</a></p>
+<table>
+<tr>
+<th>Type Name</th>
+<th>Description</th>
+<th>&nbsp;</th>
+</tr>
+<?php foreach($contentType as $type) : ?>
+<tr>
+<td><?php echo $this->escape($type->content_type_name);?></td>
+<td><?php echo $this->escape($type->content_type_description);?></td>
+<td>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-content-type','action'=>'edit'))
+. '?id=' . $type->content_type_id ;?>">Edit</a>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-content-type','action'=>'delete'))
+. '?id=' . $type->content_type_id ;?>">Delete</a>
+</td>
+</tr>
+<?php endforeach; ?>
+</table>

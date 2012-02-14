@@ -1,0 +1,158 @@
+<?php 
+$this->headTitle()->setSeparator(' - ')
+                  ->setAutoEscape(false);
+
+$basePath = $this->basePath();
+$this->headLink()->appendStylesheet($basePath . '/skins/bootstrap.min.css');
+
+$this->headLink(array(
+            'rel'  => 'shortcut icon',
+            'type' => 'image/vnd.microsoft.icon',
+            'href' => $basePath . '/images/favicon.ico',
+        ));
+
+// HTML5 shim, for IE6-8 support of HTML elements
+$this->headScript()->appendFile($basePath . '/js/html5.js', 'text/javascript', 
+    array('conditional' => 'lt IE9',));
+
+echo $this->doctype();
+?>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <!-- Scripts -->
+    <?php echo $this->headScript() ?>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<?php echo $this->headTitle('ThuyDX\'s Blog') ?>
+	<?php echo $this->headMeta() ?>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<?php echo $this->headLink() ?>
+	<link rel="stylesheet" href="<?php echo $basePath ?>/skins/reset.css">
+	<link rel="stylesheet" href="<?php echo $basePath ?>/skins/widget_css_bundle.css">    
+	<link rel="stylesheet" href="<?php echo $basePath ?>/skins/gray/styles.css">
+    
+	<script src="<?php echo $basePath ?>/js/libs/modernizr-2.0.6.min.js"></script>
+	    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+</head>
+<body>   
+<div id="container">
+	<header class="wrapper">
+		<h1><a href="#">ThuyDX's Blog</a></h1>
+	</header>
+    <div class="menu-container">
+    <nav class="wrapper">
+        <ul>
+            <li><a href="<?php echo $this->url('home') ?>">Home</a></li>
+            <li><a href="#" title="Tutorial">Tutorials</a>
+            	<ul>
+                    <li><a href="<?php echo $this->url('baseUrl') . '/category?id=3' ?>" title="Child Page">HTML/CSS</a></li>
+                    <li><a href="<?php echo $this->url('baseUrl') . '/category?id=4' ?>" title="Child Page2">PHP</a></li>
+                    <li><a href="<?php echo $this->url('baseUrl') . '/category?id=5' ?>" title="Sample Page">Zend Framework</a></li>
+                </ul>
+            </li>
+            <li><a href="#" title="Gallery">Gallery</a>
+            	<ul>
+                    <li><a href="#" title="Child Page">Family</a></li>
+                    <li><a href="#" title="Child Page2">Wallpaper</a></li>
+                    <li><a href="#" title="Sample Page">Othes</a></li>
+                </ul>
+            </li>
+            <li><a href="#" title="About">About</a>
+            	<ul>
+                	<li><a href="#" title="Profile">Profile</a></li>
+                	<li><a href="#" title="Profile">Portfolio</a></li>
+                	<li><a href="#" title="Profile">Curriculum Vitae</a></li>
+                </ul>
+            </li>
+            <li><a href="#" title="Contact">Contact</a></li>
+        </ul>
+
+    </nav>
+    </div>
+	<div id="main" role="main" class="wrapper">
+		<div class="casing">
+            <div class="sidebar">
+                <div class="right">      
+                    <div class="widget" style="height: 105px">
+                    <h2>Search</h2>
+                    <div id="search">
+                    <form action="/search" id="searchform" method="get">
+                    <input id="s" name="q" onBlur="if(this.value==''){this.value='search site'};" onFocus="if(this.value=='search site'){this.value=''};" type="text">
+                    <input id="searchsubmit" value="Search" type="submit">
+                    </form>
+                    </div>
+                    </div>
+                </div>
+                <!-- 
+ 				<div class="right">      
+                    <div class="widget">           
+                        <h2>Labels</h2>
+                        <div class="widget-content list-label-widget-content">
+                            <ul>
+                            <li>
+                            <a dir="ltr" href="#">Lorem 1</a>
+                            <span dir="ltr">(2)</span>
+                            </li>
+                            <li>
+                            <a dir="ltr" href="#">Lorem 2</a>
+                            <span dir="ltr">(1)</span>
+                            </li>
+                            <li>
+                            <a dir="ltr" href="#">Lorem 3</a>
+                            <span dir="ltr">(2)</span>
+                            </li>
+                            </ul>                
+                        </div>
+                    </div>
+
+				</div>
+				  -->
+			</div>
+            <div class="content">
+ 			<?php echo $this->raw('content'); ?>
+
+	</div>
+    <div style="clear:both" ></div>
+	<footer>
+      <address>
+        Contact us at:<br />
+        <a href="">
+        </address>
+        <p>&copy; 2006 - <?php echo date('Y') ?> by WDS GROUP. All rights reserved.</p>
+    </footer>
+</div> <!--! end of #container -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="<?php echo $basePath ?>/js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+<!-- scripts concatenated and minified via ant build script-->
+<script src="<?php echo $basePath ?>/js/plugins.js"></script>
+<script src="<?php echo $basePath ?>/js/script.js"></script>
+<!-- end scripts-->
+
+<script>
+	var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']]; // Change UA-XXXXX-X to be your site's ID
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<!--[if lt IE 7 ]>
+	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
+	<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+<![endif]-->
+
+</body>
+</html>

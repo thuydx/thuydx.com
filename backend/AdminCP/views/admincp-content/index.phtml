@@ -1,0 +1,36 @@
+<?php
+	$title = 'Content Listing';
+	$this->headTitle($title);
+?>
+<h1><?php echo $this->escape($title); ?></h1>
+<p><a href="<?php echo $this->url('default', array('controller'=>'admincp-content',
+'action'=>'add'));?>">Add new Content</a></p>
+<table>
+<tr>
+<th>#</th>
+<th>Start Date</th>
+<th>Expiry Date</th>
+<th>Content Type</th>
+<th>Status</th>
+<th>Hide Menu</th>
+<th>Action</th>
+</tr>
+<?php foreach($contents as $content) : ?>
+<tr>
+<td><?php echo $this->escape($content['content_id']);?></td>
+<td><?php echo $this->escape($content['start_date']);?></td>
+<td><?php echo $this->escape($content['expiry_date']);?></td>
+<td><?php echo $this->escape($content['type']);?></td>
+<td><?php echo $this->escape($content['status']);?></td>
+<td><?php echo $this->escape($content['hide_from_menu']);?></td>
+<td>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-content','action'=>'edit'))
+. '?id=' . $content['content_id'];?>">Edit</a>
+<a href="<?php echo $this->url('default',
+array('controller'=>'admincp-content','action'=>'delete'))
+. '?id=' . $content['content_id'] ;?>">Delete</a>
+</td>
+</tr>
+<?php endforeach; ?>
+</table>
