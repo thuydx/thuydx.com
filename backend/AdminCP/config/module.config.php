@@ -83,8 +83,21 @@ return array(
                             'AdminCP' => __DIR__ . '/../views',
                         ),
                     ),
+                    'broker'    => 'Zend\View\HelperBroker',
                 ),
             ),
+            'Zend\View\HelperBroker' => array(
+                'parameters' => array(
+                    'loader' => 'Zend\View\HelperLoader',
+                ),
+            ),
+            'Zend\View\HelperLoader' => array(
+                'parameters' => array(
+                    'map' => array(
+                        'ckeditor' => 'AdminCP\View\Helper\CKEditor',
+                    ),
+                ),
+            ),                
         ),
     ),
 );
