@@ -47,32 +47,32 @@ return array(
                 
             'AdminCP\Model\Business\Content' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Mysqli',
                 )
             ),
             'AdminCP\Model\Business\ContentType' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Mysqli',
                 )
             ),
             'AdminCP\Model\Business\ContentStatus' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Mysqli',
                 )
             ),
             'AdminCP\Model\Business\Category' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Mysqli',
                 )
             ),                
                 
-            'Zend\Db\Adapter\PdoMysql' => array(
+            'Zend\Db\Adapter\Mysqli' => array(
             	'parameters' => array(
             		'config' => array(
-            			'host' => 'localhost',
-            			'username' => 'username',
-            			'password' => 'password',
-            			'dbname' => 'dbname',
+            			'host' => '127.0.0.1',
+            			'username' => 'thuydx',
+            			'password' => 'thuydx@thuydx.com',
+            			'dbname' => 'thuydx_blog',
             		),
             	),
             ),                
