@@ -5,7 +5,7 @@
 <div class="title1">
 <a name="5094595306310361594"></a>
 <h2>
-<a href="#"><?php echo $dt[0]['title']?></a>
+<a href="<?php echo $this->basePath() . 'article?id='. $dt[0]['content_id'] ;?>"><?php echo $dt[0]['title']?></a>
 </h2>
 <div class="postmeta">
 <span class="author">
@@ -16,8 +16,8 @@ Posted by
 </span>
 <span class="clock"> On </span>
 <span class="comm">
-<a onclick="" href="#" class="comment-link">2
-comments</a>
+<!-- <a onclick="" href="#" class="comment-link">2
+comments</a> -->
 </span>
 </div>
 <div class="clear"></div>
@@ -47,11 +47,13 @@ comments</a>
 </span>
 </div>
 <div class="post-footer-line post-footer-line-2">
-<span class="post-labels">
-Labels:
+
+<span class="post-labels">&nbsp;
+<!-- Labels:
 <a rel="tag" href="#">Lorem 1</a>,
 <a rel="tag" href="#">Lorem 2</a>,
 <a rel="tag" href="#">Lorem 3</a>
+ -->
 </span>
 <span style="float: right;"><a href="<?php echo $this->basePath() . 'article?id='. $dt[0]['content_id'] ;?>">read more</a></span>
 </div>

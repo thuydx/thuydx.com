@@ -41,16 +41,18 @@ echo $this->doctype();
     
 	<script src="<?php echo $basePath ?>/js/libs/modernizr-2.0.6.min.js"></script>
 	<script src="<?php echo $basePath ?>/ckeditor/ckeditor.js"></script>
-	    <style type="text/css">
-      body {
-        padding-top: 60px;
-      }
-    </style>
+	    
 </head>
 <body>   
 <div id="container">
 	<header class="wrapper">
-		<h1><a href="#">ThuyDX's Blog</a></h1>
+		<h1>
+		    <a href="<?php echo $this->url('baseUrl') ?>">
+		        <img src="<?php echo $basePath ?>/images/logo.jpg" width="120" height="120" style="float:left"/>
+		        <span>ThuyDX's Blog</span>
+		    </a>
+		</h1>
+		<h3 style="padding-left: 5px; color: #c1c1c1;">idea, concept, plan, strategy, business, creative</h3>
 	</header>
     <div class="menu-container">
     <nav class="wrapper">
@@ -128,10 +130,10 @@ echo $this->doctype();
     <div style="clear:both" ></div>
 	<footer>
       <address>
-        Contact us at:<br />
-        <a href="">
+        Contact us at: <a href="mailto:thuydx@wds.vn?Subject=[Contact]">thuydx@wds.vn</a><br />
         </address>
-        <p>&copy; 2006 - <?php echo date('Y') ?> by WDS GROUP. All rights reserved.</p>
+        <p> Powered by: <a href="http://wds.vn" alt="WDS CMS">WDS CMS (Beta1)</a></p>
+        <p>Copyright &copy; <?php echo date('Y') ?>, <a href="http://thuydx.com" alt="ThuyDX dot Com">thuydx.com</a>. All rights reserved.</p>
     </footer>
 </div> <!--! end of #container -->
 

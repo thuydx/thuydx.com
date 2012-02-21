@@ -2,7 +2,11 @@
 /* CSS Document */
 
 body {background: none repeat scroll 0 0 #F4F4F4; font-family: Arial,Tahoma,Century gothic,sans-serif; font-size: 12px; margin: 0 auto; padding: 0;}
-
+header {height: 120px; padding: 10px 0px;}
+#container {height: 185px;}
+header h1 img {border: 2px solid #cccccc; border-radius: 2px; box-shadow: 5px 5px 10px #888888; -moz-box-shadow: 5px 5px 10px #888888; margin: 0px 10px 0px 0px; }
+header h1 {margin-bottom: 0px;}
+header h1 span {}
 .wrapper {margin: 0 auto; width:80%;}
 .casing {width:100%; float:left; margin-top: 20px;}
 .content {overflow:hidden; padding-right: 20px}
