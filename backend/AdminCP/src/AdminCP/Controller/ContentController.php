@@ -19,7 +19,7 @@ class ContentController extends ActionController
     {
         
         $contents = $this->content->fetchAll()->toArray();
-        $contentDetail = $this->content->getContentDetail($contentId);
+        //$contentDetail = $this->content->getContentDetail($contentId);
         
         foreach ($contents as $key => $content)
         {
@@ -101,13 +101,16 @@ class ContentController extends ActionController
         				'metaDescription' 	=> $formData['metaDescription'],
         				'startDate' 		=> $formData['startDate'],
         				'expDate' 			=> $formData['expDate'],
-        				'hideFromMenu' 		=> ($formData['hideFromMenu'] == 'on')? '1':'0' ,
         				'contentStatusId' 	=> $formData['contentStatusIds'],
         				'contentTypeId'		=> $formData['contentTypeIds'],
         				'content_detail_id'	=> $formData['contentDetailId'],
         				'categoryIds'		=> $formData['toCategories'],
         		);
-        		
+        		if (isset($formData['hideFromMenu'])) {
+        		    $data['hideFromMenu'] = ($formData['hideFromMenu'] == 'on')? '1':'0';
+        		} else {
+        		    $data['hideFromMenu'] = '0';
+        		}   
         		$this->content->editContent($formData['id'], $data);
         		// Redirect to list of category
         		return $this->redirect()->toRoute('default', array(
@@ -127,7 +130,7 @@ class ContentController extends ActionController
         $data['content_id'] 		= $contents['content_id'];
         $data['start_date'] 		= $contents['start_date'];
         $data['expiry_date'] 		= $contents['expiry_date'];
-        $data['hide_from_menu'] 	= $contents['hide_from_menu'];
+        $data['hide_from_menu'] 	= (int) $contents['hide_from_menu'];
         $data['content_id'] 		= $contents['content_id'];
         $data['type_checked'] 		= $contents['content_type_id'];
         $data['status_checked']		= $contents['content_status_id'];
@@ -145,8 +148,6 @@ class ContentController extends ActionController
         
         $contentType = $this->contentType->fetchAll();
         $contentStatus = $this->contentStatus->fetchAll();
-        
-
         return array(
                 'contents' => $data,
         		'contentType' => $contentType,

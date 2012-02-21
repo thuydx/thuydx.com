@@ -397,7 +397,7 @@ select.categorySelectBox {
 			<select name="toCategories[]" id="toCategories" class="cform" size="10" multiple>
 				<?php 
 				foreach ($this->categoriesSelected as $key => $categorySelected) {
-					echo '<option value="'.$categorySelected[0]['category_id'].'">'.$categorySelected[0]['category_title'].'</option>';
+					echo '<option value="'.$categorySelected['category_id'].'">'.$categorySelected['category_title'].'</option>';
 				}?>				
 			</select>		
 		

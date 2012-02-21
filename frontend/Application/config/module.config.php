@@ -42,23 +42,7 @@ return array(
                 	'content' => 'AdminCP\Model\Business\Content',
                 	'category' => 'AdminCP\Model\Business\Category',
                 ),
-            ),
-//             'AdminCP\Model\Business\Content' => array(
-//             	'parameters' => array(
-//             		'config' => 'Zend\Db\Adapter\Mysqli',
-//             	)
-//             ),
-//             'Zend\Db\Adapter\Mysqli' => array(
-//             	'parameters' => array(
-//             		'config' => array(
-//             			'host' => '127.0.0.1',
-//             			'username' => 'root',
-//             			'password' => '#xuan@thuy85',
-//             			'dbname' => 'thuydx_blog',
-//             		),
-//            		),
-// 			),
-                		
+            ),                		
             // Setup the PhpRenderer
             'Zend\View\PhpRenderer' => array(
                 'parameters' => array(
@@ -70,40 +54,44 @@ return array(
                     ),
                 ),
             ),
-        ),
-    ),
-    'routes' => array(
-        'default' => array(
-            'type'    => 'Zend\Mvc\Router\Http\Segment',
-            'options' => array(
-                'route'    => '/[:controller[/:action]]',
-                'constraints' => array(
-                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                ),
-                'defaults' => array(
-                    'controller' => 'index',
-                    'action'     => 'index',
-                ),
-            ),
-        ),
-        'home' => array(
-            'type' => 'Zend\Mvc\Router\Http\Literal',
-            'options' => array(
-                'route'    => '/',
-                'defaults' => array(
-                    'controller' => 'index',
-                    'action'     => 'index',
-                ),
-            ),
-        ),
-        'baseUrl' => array(
-            'type' => 'Zend\Mvc\Router\Http\Literal',
-            'options' => array(
-                'route'    => 'http://blog.wds.com.vn',
-                'defaults' => array(
-                    'controller' => 'index',
-                    'action'     => 'index',
+            'Zend\Mvc\Router\RouteStack' => array(
+                'parameters' => array(
+                    'routes' => array(
+                        'default' => array(
+                            'type'    => 'Zend\Mvc\Router\Http\Segment',
+                            'options' => array(
+                                'route'    => '/[:controller[/:action]]',
+                                'constraints' => array(
+                                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                ),
+                                'defaults' => array(
+                                    'controller' => 'index',
+                                    'action'     => 'index',
+                                ),
+                            ),
+                        ),
+                        'home' => array(
+                            'type' => 'Zend\Mvc\Router\Http\Literal',
+                            'options' => array(
+                                'route'    => '/',
+                                'defaults' => array(
+                                    'controller' => 'index',
+                                    'action'     => 'index',
+                                ),
+                            ),
+                        ),
+                        'baseUrl' => array(
+                            'type' => 'Zend\Mvc\Router\Http\Literal',
+                            'options' => array(
+                                'route'    => 'http://thuydx.com',
+                                'defaults' => array(
+                                    'controller' => 'index',
+                                    'action'     => 'index',
+                                ),
+                            ),
+                        ),                            
+                    ),
                 ),
             ),
         ),

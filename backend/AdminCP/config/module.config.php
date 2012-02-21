@@ -47,26 +47,26 @@ return array(
                 
             'AdminCP\Model\Business\Content' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Mysqli',
+                	'config' => 'Zend\Db\Adapter\PdoMysql',
                 )
             ),
             'AdminCP\Model\Business\ContentType' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Mysqli',
+                	'config' => 'Zend\Db\Adapter\PdoMysql',
                 )
             ),
             'AdminCP\Model\Business\ContentStatus' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Mysqli',
+                	'config' => 'Zend\Db\Adapter\PdoMysql',
                 )
             ),
             'AdminCP\Model\Business\Category' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Mysqli',
+                	'config' => 'Zend\Db\Adapter\PdoMysql',
                 )
             ),                
                 
-            'Zend\Db\Adapter\Mysqli' => array(
+            'Zend\Db\Adapter\PdoMysql' => array(
             	'parameters' => array(
             		'config' => array(
             			'host' => '127.0.0.1',

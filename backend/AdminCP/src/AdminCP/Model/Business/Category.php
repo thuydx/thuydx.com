@@ -66,10 +66,13 @@ class Category extends AbstractTable
 	}
 	public function getCategoryNotSelected($categoriesSelected = array())
 	{
-	    foreach ($categoriesSelected as $category) {
-	        $categoriesId .= $category[0]['category_id'] . ', '; 
+	    foreach ($categoriesSelected as $key => $category) {
+	        $categoriesId[$key] = $category['category_id']; 
 	    }
-	    $categoriesId = substr($categoriesId, 0, -2);
+        $categoriesId = implode(', ', $categoriesId);
+	    if (count($categoriesId) > 1) {
+    	    $categoriesId = substr($categoriesId, 0, -2);
+	    }    
 		$rs = $this->getAdapter()->fetchAll("SELECT * FROM categories WHERE category_id NOT IN (" . $categoriesId .")");
 		return $rs;
 	}

@@ -69,11 +69,16 @@ class Content extends AbstractTable
 	public function editContent($id, $data)
 	{
 	    $contentId = (int) $id;
+	    
 	    $categoriesOld= $this->getCategoryAssociation($contentId);
-	    foreach ($categoriesOld as $category) {
-	    	$categoriesId .= $category[0]['category_id'] . ', ';
+	    foreach ($categoriesOld as $key => $category) {
+	        $categoriesId[$key] = $category['category_id'];
 	    }
-	    $categoriesId = substr($categoriesId, 0, -2);
+	    $categoriesId = implode(', ', $categoriesId);
+	    if (count($categoriesId) > 1) {
+	        $categoriesId = substr($categoriesId, 0, -2);
+	    }
+	    $this->getAdapter()->query('SET NAMES UTF8');
 	    $this->getAdapter()->delete('category_associations', 'category_id IN ('.$categoriesId.') AND content_id = ' .$contentId);
 
 	    if (!empty($data)) {
@@ -140,7 +145,7 @@ class Content extends AbstractTable
 	    foreach ($rs as $key => $categoryId) {
 	        $categories[] = $this->getAdapter()->fetchAll('SELECT * FROM categories WHERE category_id = '. $categoryId['category_id']);
 	    }
-	    return $categories;
+	    return $categories[0];
 	}
 	
 	public function getAllCategory($contentId)
