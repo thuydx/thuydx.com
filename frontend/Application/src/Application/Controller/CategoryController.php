@@ -5,6 +5,7 @@ namespace Application\Controller;
 use AdminCP\Model\Business\Content;
 
 use Zend\Mvc\Controller\ActionController,
+    Zend\View\Model\ViewModel,
 	AdminCP\Model\Business\Content as CContent,
 	AdminCP\Model\Business\Category as CCategory;
 
@@ -22,7 +23,7 @@ class CategoryController extends ActionController
     	{
     	    $data[] = $this->content->getContentDetail((int) $catId['content_id']);
     	}
-    	return array('data' => $data);
+    	return new ViewModel(array('data' => $data));
     }
     
     public function setContent(CContent $content)

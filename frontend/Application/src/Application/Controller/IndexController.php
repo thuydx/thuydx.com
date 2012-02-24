@@ -2,10 +2,9 @@
 
 namespace Application\Controller;
 
-use AdminCP\Model\Business\Content;
-
 use Zend\Mvc\Controller\ActionController,
-	AdminCP\Model\Business\Content as FContent;
+	AdminCP\Model\Business\Content as FContent,
+    Zend\View\Model\ViewModel;
 
 class IndexController extends ActionController
 {	
@@ -17,9 +16,7 @@ class IndexController extends ActionController
         {
             $data[] = $this->content->getContentDetail($content['content_id']);
         }
-        return array(
-        	'data' => $data,
-        );
+        return new ViewModel(array('data' => $data,));
     }
     
     public function articleAction()
@@ -27,9 +24,7 @@ class IndexController extends ActionController
         $contentId = $this->getRequest()->query()->get('id');
         $data = $this->content->getContentDetail($contentId);
         
-        return array(
-                	'data' => $data
-                );
+        return new ViewModel(array('data' => $data));
     }
     
     public function setContent(FContent $content)

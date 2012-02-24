@@ -2,7 +2,9 @@
 
 namespace AdminCP;
 
-use Zend\Module\Consumer\AutoloaderProvider;
+use Zend\Module\Manager,
+    Zend\EventManager\StaticEventManager,
+    Zend\Module\Consumer\AutoloaderProvider;
 
 class Module implements AutoloaderProvider
 {
@@ -24,4 +26,15 @@ class Module implements AutoloaderProvider
     {
         return include __DIR__ . '/config/module.config.php';
     }
+    
+    public function initializeView($e)
+    {
+        $app          = $e->getParam('application');
+        $basePath     = $app->getRequest()->getBasePath();
+        $locator      = $app->getLocator();
+        $renderer     = $locator->get('Zend\View\Renderer\PhpRenderer');
+        $renderer->plugin('url')->setRouter($app->getRouter());
+        $renderer->doctype()->setDoctype('HTML5');
+        $renderer->plugin('basePath')->setBasePath($basePath);
+    }    
 }

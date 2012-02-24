@@ -1,6 +1,16 @@
 <?php
 return array(
     'di' => array(
+        'definition' => array(
+            'class' => array(
+                'Zend\Mvc\Router\RouteStack' => array(
+                    'instantiator' => array(
+                        'Zend\Mvc\Router\Http\TreeRouteStack',
+                        'factory'
+                    ),
+                ),
+            ),
+        ),            
         'instance' => array(
             'alias' => array(
                 'admincp' => 'AdminCP\Controller\IndexController',
@@ -9,6 +19,20 @@ return array(
                 'admincp-content' => 'AdminCP\Controller\ContentController',
                 'admincp-category' => 'AdminCP\Controller\CategoryController',
             ),
+            // Inject the plugin broker for controller plugins into
+            // the action controller for use by all controllers that
+            // extend it.
+            'Zend\Mvc\Controller\ActionController' => array(
+                'parameters' => array(
+                    'broker'       => 'Zend\Mvc\Controller\PluginBroker',
+                ),
+            ),
+            'Zend\Mvc\Controller\PluginBroker' => array(
+                'parameters' => array(
+                    'loader' => 'Zend\Mvc\Controller\PluginLoader',
+                ),
+            ),
+                                
             'AdminCP\Controller\IndexController' => array(
                 'parameters' => array(
                 	'content' => 'AdminCP\Model\Content',
@@ -75,20 +99,71 @@ return array(
             			'dbname' => 'thuydx_blog',
             		),
             	),
-            ),                
-            'Zend\View\PhpRenderer' => array(
+            ),    
+            // Setup PhpRenderer    
+            'Zend\View\Renderer\PhpRenderer' => array(
                 'parameters' => array(
-                    'options'  => array(
-                        'script_paths' => array(
-                            'AdminCP' => __DIR__ . '/../views',
-                        ),
-                    ),
-                    'broker'    => 'Zend\View\HelperBroker',
+                    'resolver' => 'Zend\View\Resolver\AggregateResolver',
+                ),
+            ),                                      
+            // Setup the View layer
+            'Zend\View\Resolver\AggregateResolver' => array(
+                'injections' => array(
+                    'Zend\View\Resolver\TemplatePathStack',
                 ),
             ),
-            'Zend\View\HelperBroker' => array(
+            'Zend\View\Resolver\TemplatePathStack' => array(
                 'parameters' => array(
-                    'loader' => 'Zend\View\HelperLoader',
+                    'paths'  => array(
+                        'admincp' => __DIR__ . '/../views',
+                    ),
+                    'baseTemplate' => 'layout/adminlayout',
+                ),
+            ),    
+            'Zend\Mvc\View\DefaultRenderingStrategy' => array(
+                'parameters' => array(
+                    'baseTemplate' => 'layout/layout',
+                ),
+            ),
+            // Setup the router and routes
+            'Zend\Mvc\Router\RouteStack' => array(
+                'parameters' => array(
+                    'routes' => array(
+                        'default' => array(
+                            'type'    => 'Zend\Mvc\Router\Http\Segment',
+                            'options' => array(
+                                'route'    => '/[:controller[/:action]]',
+                                'constraints' => array(
+                                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                ),
+                                'defaults' => array(
+                                    'controller' => 'AdminCP\Controller\IndexController',
+                                    'action'     => 'index',
+                                ),
+                            ),
+                        ),
+                        'home' => array(
+                            'type' => 'Zend\Mvc\Router\Http\Literal',
+                            'options' => array(
+                                'route'    => '/',
+                                'defaults' => array(
+                                    'controller' => 'AdminCP\Controller\IndexController',
+                                    'action'     => 'index',
+                                ),
+                            ),
+                        ),
+                        'baseUrl' => array(
+                            'type' => 'Zend\Mvc\Router\Http\Literal',
+                            'options' => array(
+                                'route'    => 'http://thuydx.com',
+                                'defaults' => array(
+                                    'controller' => 'index',
+                                    'action'     => 'index',
+                                ),
+                            ),
+                        ),                            
+                    ),
                 ),
             ),
             'Zend\View\HelperLoader' => array(
