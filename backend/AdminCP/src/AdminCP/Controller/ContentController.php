@@ -1,6 +1,8 @@
 <?php
 namespace AdminCP\Controller;
 
+use Zend\View\Helper\ViewModel;
+
 use Zend\Mvc\Controller\ActionController,
 	AdminCP\Form\ContentForm,
 	AdminCP\Model\Business\Content,
@@ -15,8 +17,16 @@ class ContentController extends ActionController
     protected $contentStatus;
     protected $categories;
     
+    public function __construct()
+    {
+        $layoutViewModel = $this->layout();
+        $layoutViewModel->setTemplate('layout/adminLayout');
+    }
+        
     public function indexAction() 
     {
+        $layoutViewModel = $this->layout();
+        $layoutViewModel->setTemplate('layout/adminLayout');
         
         $contents = $this->content->fetchAll()->toArray();
         //$contentDetail = $this->content->getContentDetail($contentId);
@@ -38,7 +48,7 @@ class ContentController extends ActionController
             $data[$key]['type'] = $type['content_type_name'];
             $data[$key]['status'] = $status['status_title'];
         }    
-        return array('contents' => $data);
+        return new ViewModel(array('contents' => $data));
     }
     
     public function addAction() 

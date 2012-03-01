@@ -9,6 +9,8 @@ class IndexController extends ActionController
 {
     public function indexAction()
     {
+        $layoutViewModel = $this->layout();
+        $layoutViewModel->setTemplate('layout/adminLayout');
         return new ViewModel();
     }
 }

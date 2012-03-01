@@ -2,21 +2,32 @@
 /* CSS Document */
 
 body {background: none repeat scroll 0 0 #F4F4F4; font-family: Arial,Tahoma,Century gothic,sans-serif; font-size: 12px; margin: 0 auto; padding: 0;}
-header {height: 120px; padding: 10px 0px;}
+header {
+	height: 130px; padding: 10px 0px 0px 0px;
+	background: none repeat scroll 0 0 #F1F1F1;
+    border-bottom: 1px solid #CCCCCC;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    box-shadow: 5px 5px 5px #CCCCCC;
+}
 #container {height: 185px;}
-header h1 img {border: 2px solid #cccccc; border-radius: 2px; box-shadow: 5px 5px 10px #888888; -moz-box-shadow: 5px 5px 10px #888888; margin: 0px 10px 0px 0px; }
-header h1 {margin-bottom: 0px;}
+img.logo {border: 2px solid #ffffff; border-radius: 2px; box-shadow: 5px 5px 10px #888888; -moz-box-shadow: 5px 5px 10px #888888; margin: 0px 10px 0px 0px; }
+header h1 {margin-bottom: 0px; line-height: 30px;}
 header h1 span {}
-.wrapper {margin: 0 auto; width:80%;}
+.wrapper {margin: 0 auto; width:80%; min-width: 1000px;}
 .casing {width:100%; float:left; margin-top: 20px;}
 .content {overflow:hidden; padding-right: 20px}
 .sidebar {float:right; width:300px;}
-.menu-container {	background: url("../../images/menu.png") repeat-x scroll 0 0 transparent;    display: block;    font-size: 12px;    height: 45px;    margin: 0 auto;    text-transform: uppercase;	}
-nav{ margin:0px auto; padding: 0px; height:45px; overflow:hidden; width:1000px;}
-nav ul {float: left; list-style: none; margin: 0px; padding: 0px;}
+.header-text {float: left; width:500px;}
+.slogan {margin-left: 25px; width:500px; color: #c1c1c1; line-height: 30px;}
+.menu-container {	/*background: url("../../images/menu.png") repeat-x scroll 0 0 transparent;*/ background: #000000; border-top-left-radius: 5px; border-top-right-radius:5px;    display: block;    font-size: 12px;    height: 45px;    margin: 25px 0px 0px 25px;    text-transform: uppercase;	float: left; width:450px;}
+nav{ margin:0px auto; padding: 0px; height:45px; overflow:hidden; width:500px;}
+nav ul {float: left; list-style: none; margin: 0px 0px 0px 5px; padding: 0px;}
 nav li {float: left;list-style: none;margin: 0px;padding: 0px;text-shadow:1px 1px 0px #000;}
 nav li a, nav li a:link, nav li a:visited {color:#aaa;display: block;margin: 0px;padding: 0px 10px ;line-height:45px;}
-nav li a:hover, nav li a:active {background:url(../../images/menua.png) repeat-x;color: #fff;margin: 0px;padding: 0px 10px ;line-height:45px;text-decoration: none;}
+nav li a:hover, nav li a:active {background:url(../../images/menua.png) repeat-x; color: #fff;margin: 0px;padding: 0px 10px ;line-height:45px;text-decoration: none;}
 nav li li a, nav li li a:link, nav li li a:visited {background:#161616; width: 150px; color:#aaa; font-weight: normal; float: none; margin: 0px; padding: 0px 10px ; line-height:32px; border-bottom: 1px solid #000; text-shadow:NONE;}
 nav li li a:hover, nav li li a:active {color: #eee; background:#222; padding: 0px 10px ; line-height:32px;}
 nav li ul {z-index: 9999; position: absolute; left: -999em; height: auto; width: 170px; margin: 0px; padding: 0px; background:#0B74CA;}
@@ -30,6 +41,8 @@ nav li:hover ul, nav li li:hover ul,
 nav li li li:hover ul, nav li.sfhover ul,
 nav li li.sfhover ul, nav li li li.sfhover ul { left: auto;}
 nav li:hover, nav li.sfhover { position: static;}
+
+.header-right {float: right; width:350px;}
 
 /* The Search */
 #search {width:300px;padding:0px 0px ;margin:10px 0px 0px 0px;float:right;height:32px;display:inline;}
@@ -46,6 +59,11 @@ nav li:hover, nav li.sfhover { position: static;}
 .shead p{margin-left:10px;margin-bottom:10px;color:#222;}
 h2.stitle{text-decoration: underline;font-weight:normal;}
 .searchmeta{margin-top:5px;color:#43873e;}
+
+/* login form & language bar*/
+.language-bar { float:right; width: 350px; height: 40px;}
+.new-feed { float:right; width: 350px; height: 40px;}
+
 
 /* right column */
 .right{float:right;width:300px;padding:0px 2px 0px 0;display:inline;}

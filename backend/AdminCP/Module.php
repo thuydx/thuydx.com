@@ -22,19 +22,32 @@ class Module implements AutoloaderProvider
         );
     }
 
-    public function getConfig($env = null)
+    public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
     
     public function initializeView($e)
     {
-        $app          = $e->getParam('application');
-        $basePath     = $app->getRequest()->getBasePath();
+        $app          = $e->getParam('admincp');
+        $basePath     = $app->getRequest()->getBasePath();    
         $locator      = $app->getLocator();
         $renderer     = $locator->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->plugin('url')->setRouter($app->getRouter());
+        
         $renderer->doctype()->setDoctype('HTML5');
+        $renderer->plugin('url')->setRouter($app->getRouter());
         $renderer->plugin('basePath')->setBasePath($basePath);
-    }    
+        
+        // We can get at the view model here if we need to use logic to set
+        // the layout template for instance by doing this:
+        
+        // $viewModel = $application->getMvcEvent()->getViewModel();
+        // $viewModel->setTemplate('layout/layout');
+        
+        $config      = $e->getParam('config');
+        $container = $renderer->placeholder('view_config');
+        foreach ($config->view as $var => $value) {
+            $container->{$var} = $value;
+        }
+    }
 }

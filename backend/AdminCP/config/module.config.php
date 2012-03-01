@@ -101,11 +101,18 @@ return array(
             	),
             ),    
             // Setup PhpRenderer    
+//             'Zend\View\Renderer\PhpRenderer' => array(
+//                 'parameters' => array(
+//                     'resolver' => 'Zend\View\Resolver\AggregateResolver',
+//                 ),
+//             ),      
             'Zend\View\Renderer\PhpRenderer' => array(
                 'parameters' => array(
-                    'resolver' => 'Zend\View\Resolver\AggregateResolver',
+                    'renderTrees' => false,
+                    'resolver' => 'Zend\View\Resolver\TemplatePathStack',
+                    'broker'   => 'Zend\View\HelperBroker',
                 ),
-            ),                                      
+            ),                                                
             // Setup the View layer
             'Zend\View\Resolver\AggregateResolver' => array(
                 'injections' => array(
@@ -117,14 +124,14 @@ return array(
                     'paths'  => array(
                         'admincp' => __DIR__ . '/../views',
                     ),
-                    'baseTemplate' => 'layout/adminlayout',
+//                     'baseTemplate' => 'layout/adminlayout',
                 ),
             ),    
-            'Zend\Mvc\View\DefaultRenderingStrategy' => array(
-                'parameters' => array(
-                    'baseTemplate' => 'layout/layout',
-                ),
-            ),
+//             'Zend\Mvc\View\DefaultRenderingStrategy' => array(
+//                 'parameters' => array(
+//                     'baseTemplate' => 'layout/layout',
+//                 ),
+//             ),
             // Setup the router and routes
             'Zend\Mvc\Router\RouteStack' => array(
                 'parameters' => array(

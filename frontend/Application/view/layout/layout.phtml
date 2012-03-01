@@ -46,46 +46,64 @@ echo $this->doctype();
 <body>   
 <div id="container">
 	<header class="wrapper">
-		<h1>
-		    <a href="<?php echo $this->url('baseUrl') ?>">
-		        <img src="<?php echo $basePath ?>/images/logo.jpg" width="120" height="120" style="float:left"/>
-		        <span>ThuyDX's Blog</span>
-		    </a>
-		</h1>
-		<h3 style="padding-left: 5px; color: #c1c1c1;">idea, concept, plan, strategy, business, creative</h3>
-	</header>
-    <div class="menu-container">
-    <nav class="wrapper">
-        <ul>
-            <li><a href="<?php echo $this->url('home') ?>">Home</a></li>
-            <li><a href="#" title="Tutorial">Tutorials</a>
-            	<ul>
-                    <li><a href="<?php echo $this->url('baseUrl') . '/category?id=3' ?>" title="Child Page">HTML/CSS</a></li>
-                    <li><a href="<?php echo $this->url('baseUrl') . '/category?id=4' ?>" title="Child Page2">PHP</a></li>
-                    <li><a href="<?php echo $this->url('baseUrl') . '/category?id=5' ?>" title="Sample Page">Zend Framework</a></li>
-                </ul>
-            </li>
-            <li><a href="#" title="Gallery">Gallery</a>
-            	<ul>
-                    <li><a href="#" title="Child Page">Family</a></li>
-                    <li><a href="#" title="Child Page2">Wallpaper</a></li>
-                    <li><a href="#" title="Sample Page">Othes</a></li>
-                </ul>
-            </li>
-            <li><a href="#" title="About">About</a>
-            	<ul>
-                	<li><a href="#" title="Profile">Profile</a></li>
-                	<li><a href="#" title="Profile">Portfolio</a></li>
-                	<li><a href="#" title="Profile">Curriculum Vitae</a></li>
-                </ul>
-            </li>
-            <li><a href="#" title="Contact">Contact</a></li>
-        </ul>
+        <img class="logo" src="<?php echo $basePath ?>/images/logo.png" width="120" height="120" style="float:left; margin-left: 5px;"/>
+        <div class="header-text">
+            <h1>
+                <a href="<?php echo $this->url('baseUrl') ?>">
+                    <span style="margin-left:25px;">ThuyDX's Blog</span>
+                </a>
+            </h1>
+            <h3 class="slogan">
+                idea, concept, plan, strategy, business, creative
+            </h3>   
+            <div class="menu-container">
+                <nav class="wrapper">
+                    <ul>
+                        <li><a href="<?php echo $this->url('home') ?>">Home</a></li>
+                        <li><a href="#" title="Tutorial">Tutorials</a>
+                        	<ul>
+                                <li><a href="<?php echo $this->url('baseUrl') . '/category?id=3' ?>" title="Child Page">HTML/CSS</a></li>
+                                <li><a href="<?php echo $this->url('baseUrl') . '/category?id=4' ?>" title="Child Page2">PHP</a></li>
+                                <li><a href="<?php echo $this->url('baseUrl') . '/category?id=5' ?>" title="Sample Page">Zend Framework</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" title="Gallery">Gallery</a>
+                        	<ul>
+                                <li><a href="#" title="Child Page">Family</a></li>
+                                <li><a href="#" title="Child Page2">Wallpaper</a></li>
+                                <li><a href="#" title="Sample Page">Othes</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" title="About">About</a>
+                        	<ul>
+                            	<li><a href="#" title="Profile">Profile</a></li>
+                            	<li><a href="#" title="Profile">Portfolio</a></li>
+                            	<li><a href="#" title="Profile">Curriculum Vitae</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" title="Contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>	    
+        </div>
+        <div class="header-right">
+           	<div id="search">
+                <form action="/search" id="searchform" method="get">
+                <input id="s" name="q" onBlur="if(this.value==''){this.value='search site'};" onFocus="if(this.value=='search site'){this.value=''};" type="text">
+                <input id="searchsubmit" value="Search" type="submit">
+                </form>
+            </div>        
+            <div class="language-bar"></div>       
+            <div class="new-feed"></div>       
+        </div>
 
-    </nav>
-    </div>
+        
+        	
+
+	</header>
 	<div id="main" role="main" class="wrapper">
 		<div class="casing">
+                <!-- 
             <div class="sidebar">
                 <div class="right">      
                     <div class="widget" style="height: 105px">
@@ -98,7 +116,6 @@ echo $this->doctype();
                     </div>
                     </div>
                 </div>
-                <!-- 
  				<div class="right">      
                     <div class="widget">           
                         <h2>Labels</h2>
@@ -121,12 +138,12 @@ echo $this->doctype();
                     </div>
 
 				</div>
-				  -->
 			</div>
+				  -->
             <div class="content">
- 			<?php echo $this->raw('content'); ?>
+ 			<?php echo $this->content; ?>
 
-	</div>
+	        </div>
     <div style="clear:both" ></div>
 	<footer>
       <address>

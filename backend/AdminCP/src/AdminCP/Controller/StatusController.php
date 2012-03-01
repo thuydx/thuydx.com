@@ -9,6 +9,12 @@ class StatusController extends ActionController
 {
     protected $contentStatus;
     
+    public function __construct()
+    {
+        $layoutViewModel = $this->layout();
+        $layoutViewModel->setTemplate('layout/adminLayout');
+    }
+    
     public function indexAction() 
     {
         return array(
