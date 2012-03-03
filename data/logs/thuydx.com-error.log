@@ -31,3 +31,9 @@
 [Fri Feb 24 13:25:04 2012] [error] [client 118.69.34.3] (20024)The given path is misformatted or contained invalid characters: Cannot map GET /skins/wi%3E%20%20%20%20%20%20%20%20%20%20%20%20%3C/li%3E%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%3Ca%20href= HTTP/1.1 to file, referer: http://thuydx.com/category?id=3
 [Fri Feb 24 13:25:17 2012] [error] [client 118.69.34.3] (20024)The given path is misformatted or contained invalid characters: Cannot map GET /skins/wip%3E%20%20%20%20%3C/footer%3E%3C/div%3E%20%3C!--!%20end%20of%20 HTTP/1.1 to file, referer: http://thuydx.com/category?id=4
 [Mon Feb 27 15:48:40 2012] [error] [client 124.205.190.102] (20024)The given path is misformatted or contained invalid characters: Cannot map GET /w00tw00t.at.blackhats.romanian.anti-sec:) HTTP/1.1 to file
+[Sat Mar 03 08:41:57 2012] [error] [client 127.0.0.1] File does not exist: D:/PROJECT/thuydx.com/public/Animated/contact-form/images/close.png, referer: http://thuydx.com/
+[Sat Mar 03 08:44:45 2012] [error] [client 127.0.0.1] File does not exist: D:/PROJECT/thuydx.com/public/Animated/contact-form/images/close.png, referer: http://thuydx.com/
+[Sat Mar 03 08:44:59 2012] [error] [client 113.160.54.50] File does not exist: D:/PROJECT/thuydx.com/public/Animated/contact-form/images/close.png, referer: http://thuydx.com/
+[Sat Mar 03 08:48:26 2012] [error] [client 192.168.1.5] File does not exist: D:/PROJECT/thuydx.com/public/Animated/contact-form/images/close.png, referer: http://wds.local/
+[Sat Mar 03 08:48:27 2012] [error] [client 192.168.1.5] File does not exist: D:/PROJECT/thuydx.com/public/Animated/favicon.ico
+[Sat Mar 03 08:48:27 2012] [error] [client 192.168.1.5] File does not exist: D:/PROJECT/thuydx.com/public/Animated/favicon.ico
