@@ -71,35 +71,44 @@ return array(
                 
             'AdminCP\Model\Business\Content' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Adapter',
                 )
             ),
             'AdminCP\Model\Business\ContentType' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Adapter',
                 )
             ),
             'AdminCP\Model\Business\ContentStatus' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Adapter',
                 )
             ),
             'AdminCP\Model\Business\Category' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\PdoMysql',
+                	'config' => 'Zend\Db\Adapter\Adapter',
                 )
             ),                
-                
-            'Zend\Db\Adapter\PdoMysql' => array(
-            	'parameters' => array(
-            		'config' => array(
-            			'host' => '127.0.0.1',
-            			'username' => 'thuydx',
-            			'password' => 'thuydx@thuydx.com',
-            			'dbname' => 'thuydx_blog',
-            		),
-            	),
-            ),    
+            'Zend\Db\Adapter\Adapter' => array(
+                'parameters' => array(
+                    'driver' => array(
+                            'driver' => 'Pdo',
+                            'username' => 'thuydx',
+                            'password' => 'thuydx@thuydx.com',
+                            'dsn'   => 'mysql:dbname=thuydx_blog;hostname=localhost',
+                    ),
+                )
+            ),
+//             'Zend\Db\Adapter\PdoMysql' => array(
+//             	'parameters' => array(
+//             		'config' => array(
+//             			'host' => '127.0.0.1',
+//             			'username' => 'thuydx',
+//             			'password' => 'thuydx@thuydx.com',
+//             			'dbname' => 'thuydx_blog',
+//             		),
+//             	),
+//             ),    
                                                          
             // Setup the View layer
             'Zend\View\Resolver\AggregateResolver' => array(
@@ -118,7 +127,7 @@ return array(
             'Zend\View\Resolver\TemplatePathStack' => array(
                 'parameters' => array(
                     'paths'  => array(
-                        'admincp' => __DIR__ . '/../views',
+                        'AdminCP' => __DIR__ . '/../view',
                     ),
                 ),
             ),

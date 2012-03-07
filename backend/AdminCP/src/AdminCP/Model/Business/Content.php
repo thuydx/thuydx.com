@@ -1,9 +1,9 @@
 <?php
 namespace AdminCP\Model\Business;
 
-use Zend\Db\Table\AbstractTable;
+use Zend\Db\Adapter\Driver\Pdo\Connection;
 
-class Content extends AbstractTable
+class Content extends Connection
 {
 	protected $_name = 'content';
 	protected $_dependentTables = array('content_type','content_status');
