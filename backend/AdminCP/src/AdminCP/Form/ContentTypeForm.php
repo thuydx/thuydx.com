@@ -4,6 +4,7 @@ namespace AdminCP\Form;
 
 use Zend\Form\Form,
 	Zend\Form\Element;
+
 class ContentTypeForm extends Form
 {
 	public function init()

@@ -1,0 +1,5 @@
+[Wed Mar 07 14:00:25 2012] [error] [client 113.160.54.50] Directory index forbidden by Options directive: D:/PROJECT/thuydx.com/public/zf2doc/
+[Fri Mar 16 07:09:53 2012] [error] [client 219.235.248.95] Invalid URI in request GET HTTP/1.1 HTTP/1.1
+[Fri Mar 16 07:10:28 2012] [error] [client 219.235.248.95] Invalid URI in request GET  HTTP/1.1
+[Sun Mar 18 22:45:20 2012] [error] [client 83.170.66.8] File does not exist: C:/Program Files (x86)/Zend/phpMyAdmin/config
+[Sun Mar 18 22:45:20 2012] [error] [client 83.170.66.8] File does not exist: C:/Program Files (x86)/Zend/phpMyAdmin/config

@@ -16,15 +16,15 @@ class IndexController extends ActionController
         {
             $data[] = $this->content->getContentDetail($content['content_id']);
         }
-        return new ViewModel(array('data' => $data,));
+        return new ViewModel(array('data' => $data));
     }
     
     public function articleAction()
     {
-        $contentId = $this->getRequest()->query()->get('id');
-        $data = $this->content->getContentDetail($contentId);
+//         $contentId = $this->getRequest()->query()->get('id');
+//         $data = $this->content->getContentDetail($contentId);
         
-        return new ViewModel(array('data' => $data));
+//         return new ViewModel(array('data' => $data));
     }
     
     public function setContent(FContent $content)

@@ -1,9 +1,23 @@
 <?php
 chdir(dirname(__DIR__));
-require_once (getenv('ZF2_PATH') ?: 'vendor/ZendFramework/library') . '/Zend/Loader/AutoloaderFactory.php';
-Zend\Loader\AutoloaderFactory::factory();
 
-if (!($env = getenv('APPLICATION_ENV'))) {
+defined('WEB_ROOT')
+|| define('WEB_ROOT', realpath(dirname(dirname(__FILE__))));
+
+defined('ZF2_LIBRARY')
+|| define('ZF2_LIBRARY', realpath((getenv('ZF2_PATH')?:'vendor\ZendFramework\library')));
+
+defined('APPLICATION_ENV')
+|| define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
+
+set_include_path(implode(PATH_SEPARATOR,array(
+    ZF2_LIBRARY,
+    get_include_path(),
+)));
+
+require_once 'Zend/Loader/AutoloaderFactory.php';
+Zend\Loader\AutoloaderFactory::factory();
+if (!($env = APPLICATION_ENV)) {
     $env = 'local';
 }
 
@@ -11,7 +25,7 @@ $appConfig = include 'config/application.config.php';
 
 $listenerOptions  = new Zend\Module\Listener\ListenerOptions($appConfig['module_listener_options']);
 $defaultListeners = new Zend\Module\Listener\DefaultListenerAggregate($listenerOptions);
-$defaultListeners->getConfigListener()->addConfigGlobPath("config/autoload/{global,$env}.config.php");
+$defaultListeners->getConfigListener()->addConfigGlobPath("config/autoload/{,*.}{global,local}.config.php");
 
 $moduleManager = new Zend\Module\Manager($appConfig['modules']);
 $moduleManager->events()->attachAggregate($defaultListeners);

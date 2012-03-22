@@ -1,33 +1,56 @@
 <?php
 namespace AdminCP\Model\Business;
 
-use Zend\Db\Adapter\Driver\Pdo\Connection;
+use Zend\Db\TableGateway\TableGateway,
+    Zend\Db\Adapter\Adapter,
+    Zend\Db\ResultSet\ResultSet,
+    Zend\Db\Sql\Select;
 
-class Content extends Connection
+class Content extends TableGateway
 {
-	protected $_name = 'content';
-	protected $_dependentTables = array('content_type','content_status');
-	protected $_referenceMap    = array(
-        'CategoryAssociation' => array(
-            'columns'           => array('content_id'),
-            'refTableClass'     => 'CategoryAssociation',
-            'refColumns'        => array('content_id')
-        ),
-	    'ContentDetail'		=> array(
-            'columns'           => array('content_detail_id'),
-            'refTableClass'     => 'ContentDetail',
-            'refColumns'        => array('content_detail_id')
-	    ),
-    );
+//     protected $_adapter;
+//     protected $driverConfig;
+// 	protected $_name = 'content';
+// 	protected $_dependentTables = array('content_type','content_status');
+// 	protected $_referenceMap    = array(
+//         'CategoryAssociation' => array(
+//             'columns'           => array('content_id'),
+//             'refTableClass'     => 'CategoryAssociation',
+//             'refColumns'        => array('content_id')
+//         ),
+// 	    'ContentDetail'		=> array(
+//             'columns'           => array('content_detail_id'),
+//             'refTableClass'     => 'ContentDetail',
+//             'refColumns'        => array('content_detail_id')
+// 	    ),
+//     );
+    /**
+     * @var Select
+     */
+    protected $sqlSelect = null;
+    	
+    public function __construct(Adapter $adapter = null, $databaseSchema = null,
+            ResultSet $selectResultPrototype = null)
+    {
+        return parent::__construct('content', $adapter, $databaseSchema,
+                $selectResultPrototype);
+    }
 	
+	public function fetchAll()
+	{
+	    $resultSet = $this->select();
+	    return $resultSet;
+	}
+		
 	public function getContent($id)
 	{
 		$id = (int) $id;
-		$row = $this->fetchRow('content_id = ' . $id);
+		$rowset = $this->select(array('content_id' => $id));
+		$row = $rowset->current();
 		if (!$row) {
-			throw new Exception("Could not find row $id");
+		    throw new \Exception("Could not find row $id");
 		}
-		return $row->toArray();
+		return $row;
 	}
 	
 	public function addContent($data)
@@ -89,7 +112,7 @@ class Content extends Connection
 	    			'content_status_id' => $data['contentStatusId'],
 	    			'content_type_id' => $data['contentTypeId'],
 	    	);
-	    	$this->update($contentData, 'content_id =' . $contentId);
+	    	$this->update($contentData, array('content_id' => $contentId));
 	    	$detailData = array(
 	    			'content_id' => $contentId,
 	    			'title' => $data['contentTitle'],
@@ -134,24 +157,64 @@ class Content extends Connection
 	public function getContentDetail($contentId)
 	{
 	    $contentId = (int) $contentId;
-	    $rs = $this->getAdapter()->fetchAll('SELECT * FROM content_detail WHERE content_id =' .$contentId);
-	    return $rs;
+        $select = new Select;
+        $select->from('content_detail')
+                ->where->equalTo('content_id', $contentId);  // option 1: using default function of Zend\Db\Sql\Select
+//                 ->where('content_id ="'.$contentId.'"');  // option 2: using alter sql string
+	    $statement = $this->adapter->createStatement();
+	    
+	    $select->prepareStatement($this->adapter, $statement);
+	    
+	    $resultSet = new ResultSet();
+	    $resultSet->setDataSource($statement->execute());
+	    return $resultSet->toArray();
 	}
 	
 	public function getCategoryAssociation($contentId)
 	{
 	    $contentId = (int) $contentId;
-	    $rs = $this->getAdapter()->fetchAll('SELECT * FROM category_associations WHERE content_id = ' . $contentId );
-	    foreach ($rs as $key => $categoryId) {
-	        $categories[] = $this->getAdapter()->fetchAll('SELECT * FROM categories WHERE category_id = '. $categoryId['category_id']);
+	    $select = new Select;
+	    $select->from('category_associations')
+	    ->where->equalTo('content_id', $contentId);  
+	    $statement = $this->adapter->createStatement();
+	     
+	    $select->prepareStatement($this->adapter, $statement);
+	     
+	    $resultSet = new ResultSet();
+	    $resultSet->setDataSource($statement->execute());
+
+	    foreach ($resultSet->toArray() as $key => $categoryId) {
+	        $select->from('categories')
+	        ->where->equalTo('category_id', $categoryId['category_id']);
+	        $statement = $this->adapter->createStatement();
+	        
+	        $select->prepareStatement($this->adapter, $statement);
+
+	        $resultSet->setDataSource($statement->execute());
+	        $categories[] = $resultSet->toArray();
 	    }
-	    return $categories[0];
+	    return $categories;
 	}
 	
 	public function getAllCategory($contentId)
 	{
 	    $contentId = (int) $contentId;
-	    $rs = $this->getAdapter()->fetchAll('SELECT * FROM category_associations WHERE content_id = ' . $contentId);
-	    return $rs;
+	    $select = new Select;
+	    $select->from('category_associations')
+	    ->where->equalTo('content_id', $contentId);  // option 1: using default function of Zend\Db\Sql\Select
+	    //                 ->where('content_id ="'.$contentId.'"');  // option 2: using alter sql string
+	    $statement = $this->adapter->createStatement();
+	     
+	    $select->prepareStatement($this->adapter, $statement);
+	     
+	    $resultSet = new ResultSet();
+	    $resultSet->setDataSource($statement->execute());
+	    return $resultSet->toArray();
+	}
+	
+	public function setAdapter(Adapter $_adapter) 
+	{
+	    $this->_adapter = $_adapter;
+	    return $this->_adapter;
 	}
 }	

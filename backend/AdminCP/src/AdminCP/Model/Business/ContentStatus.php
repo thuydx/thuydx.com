@@ -2,27 +2,34 @@
 
 namespace AdminCP\Model\Business;
 
-use Zend\Db\Table\AbstractTable;
+use Zend\Db\TableGateway\TableGateway,
+    Zend\Db\Adapter\Adapter,
+    Zend\Db\ResultSet\ResultSet;
 
-class ContentStatus extends AbstractTable
-{
-	protected $_name = 'content_status';
-	protected $_referenceMap    = array(
-			'Content' => array(
-					'columns'           => array('content_status_id'),
-					'refTableClass'     => 'Content',
-					'refColumns'        => array('content_status_id')
-			)
-	);
-
+class ContentStatus extends TableGateway
+{	
+	public function __construct(Adapter $adapter = null, $databaseSchema = null,
+	        ResultSet $selectResultPrototype = null)
+	{
+	    return parent::__construct('content_status', $adapter, $databaseSchema,
+	            $selectResultPrototype);
+	}
+	
+	public function fetchAll()
+	{
+	    $resultSet = $this->select();
+	    return $resultSet;
+	}
+	
 	public function getContentStatus($id)
 	{
 		$id = (int) $id;
-		$row = $this->fetchRow('content_status_id = ' . $id);
+		$rowset = $this->select(array('content_status_id' => $id));
+		$row = $rowset->current();
 		if (!$row) {
-			throw new Exception("Could not find row $id");
+			throw new \Exception("Could not find row $id");
 		}
-		return $row->toArray();
+		return $row;
 	}
 	
 	public function addContentStatus($contentStatusName)
@@ -38,11 +45,11 @@ class ContentStatus extends AbstractTable
 		$data = array(
 				'status_title' => $contentStatusName,
 		);
-		$this->update($data, 'content_status_id = ' . (int) $id);
+		$this->update($data, array('content_status_id' => (int) $id));
 	}
 	
 	public function deleteContentStatus($id)
 	{
-		$this->delete('content_status_id =' . (int) $id);
+		$this->delete(array('content_status_id' => (int) $id));
 	}
 }

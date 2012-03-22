@@ -2,20 +2,34 @@
 
 namespace AdminCP\Model\Business;
 
-use Zend\Db\Table\AbstractTable;
+use Zend\Db\TableGateway\TableGateway,
+    Zend\Db\Adapter\Adapter,
+    Zend\Db\ResultSet\ResultSet,
+    Zend\Db\Sql\Select;
 
-class Category extends AbstractTable
+class Category extends TableGateway
 {
-	protected $_name = 'categories';
-	
+    public function __construct(Adapter $adapter = null, $databaseSchema = null,
+            ResultSet $selectResultPrototype = null)
+    {
+        return parent::__construct('categories', $adapter, $databaseSchema,
+                $selectResultPrototype);
+    }    
+
+    public function fetchAll()
+    {
+        $resultSet = $this->select();
+        return $resultSet;
+    }
 	public function getCategory($id)
 	{
 		$id = (int) $id;
-		$row = $this->fetchRow('category_id = ' . $id);
+		$rowset = $this->select(array('category_id' => $id));
+		$row = $rowset->current();
 		if (!$row) {
-			throw new Exception("Could not find row $id");
+			throw new \Exception("Could not find row $id");
 		}
-		return $row->toArray();
+		return $row;
 	}
 	
 	public function addCategory($info = array())
@@ -58,12 +72,14 @@ class Category extends AbstractTable
 	        		'sort_order' => $info['sortOrder'],
 	        );
 	    }
-		$this->update($data, 'category_id = ' . (int) $id);
+		$this->update($data, array('category_id' => (int) $id));
 	}
+	
 	public function deleteCategory($id)
 	{
-		$this->delete('category_id =' . (int) $id);
+		$this->delete(array('category_id' => (int) $id));
 	}
+	
 	public function getCategoryNotSelected($categoriesSelected = array())
 	{
 	    foreach ($categoriesSelected as $key => $category) {
@@ -73,13 +89,28 @@ class Category extends AbstractTable
 	    if (count($categoriesId) > 1) {
     	    $categoriesId = substr($categoriesId, 0, -2);
 	    }    
-		$rs = $this->getAdapter()->fetchAll("SELECT * FROM categories WHERE category_id NOT IN (" . $categoriesId .")");
-		return $rs;
+	    $rowset = $this->select(function (Select $select) {
+	        $select->from('categories');
+	        $select->where('category_id', 'NOT IN (' . $categoriesId . ')');
+	    });
+	    $row = $rowset->current();
+		//$rs = $this->getAdapter()->fetchAll("SELECT * FROM categories WHERE category_id NOT IN (" . $categoriesId .")");
+		return $row;
 	}
 	
 	public function getCategoryById($categoryId)
 	{
-	    $rs = $this->getAdapter()->fetchAll('SELECT * FROM category_associations WHERE category_id = ' .$categoryId);
-	    return $rs;
+	    $categoryId = (int) $categoryId;
+	    $select = new Select;
+	    $select->from('category_associations')
+	    ->where->equalTo('category_id', $categoryId);  
+	    $statement = $this->adapter->createStatement();
+	     
+	    $select->prepareStatement($this->adapter, $statement);
+	     
+	    $resultSet = new ResultSet();
+	    $resultSet->setDataSource($statement->execute());
+	    
+	    return $resultSet->toArray();
 	}
 }

@@ -13,7 +13,7 @@ class ArticleController extends ActionController
 	public function indexAction()
     {
 		$contentId = $this->getRequest()->query()->get('id');
-		$data['content'] = $this->content->fetchRow('content_id = ' . $contentId)->toArray();
+		$data['content'] = $this->content->fetchAll('content_id = ' . $contentId)->toArray();
         $data['detail'] = $this->content->getContentDetail($contentId);
         return array('data' => $data);
     }

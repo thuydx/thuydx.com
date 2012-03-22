@@ -17,9 +17,9 @@ class StatusController extends ActionController
     
     public function indexAction() 
     {
-        return array(
-        		'contentStatus' => $this->contentStatus->fetchAll(),
-        );
+        return new ViewModel(array(
+                'contentStatus' => $this->contentStatus->fetchAll(),
+        ));
     }
     
     public function addAction()
@@ -64,14 +64,17 @@ class StatusController extends ActionController
 				}
 				// Redirect to list of status
 				return $this->redirect()->toRoute('default', array(
-				'controller' => 'admincp-content-status',
-				'action' => 'index',
+    				'controller' => 'admincp-content-status',
+    				'action' => 'index',
 				));
 			}
 		} else {
 			$id = $request->query()->get('id', 0);
 			if ($id > 0) {
-				$form->populate($this->contentStatus->getContentStatus($id));
+			    $content = $this->contentStatus->getContentStatus($id);
+			    if ($content) {
+			        $form->populate($content->getArrayCopy());
+			    }
 			}
 		}
 		return array('form' => $form);

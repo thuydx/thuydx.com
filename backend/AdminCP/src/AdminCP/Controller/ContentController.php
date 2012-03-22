@@ -1,14 +1,13 @@
 <?php
 namespace AdminCP\Controller;
 
-use Zend\View\Helper\ViewModel;
-
 use Zend\Mvc\Controller\ActionController,
 	AdminCP\Form\ContentForm,
 	AdminCP\Model\Business\Content,
 	AdminCP\Model\Business\ContentType,
 	AdminCP\Model\Business\ContentStatus,
-	AdminCP\Model\Business\Category;
+	AdminCP\Model\Business\Category,
+    Zend\View\Helper\ViewModel;
 
 class ContentController extends ActionController
 {
@@ -19,23 +18,18 @@ class ContentController extends ActionController
     
     public function __construct()
     {
-        $layoutViewModel = $this->layout();
-        $layoutViewModel->setTemplate('layout/adminLayout');
+//         $layoutViewModel = $this->layout();
+//         $layoutViewModel->setTemplate('layout/adminLayout');
     }
         
     public function indexAction() 
     {
-        $layoutViewModel = $this->layout();
-        $layoutViewModel->setTemplate('layout/adminLayout');
-        
-        $contents = $this->content->fetchAll()->toArray();
+        $contents = $this->content->fetchAll();
         //$contentDetail = $this->content->getContentDetail($contentId);
-        
         foreach ($contents as $key => $content)
         {
             $type = $this->contentType->getContentType($content['content_type_id']);
             $status = $this->contentStatus->getContentStatus($content['content_status_id']);
-            
             // Select all category
             
             $category = $this->content->getAllCategory($content['content_id']);
@@ -47,8 +41,8 @@ class ContentController extends ActionController
             $data[$key]['hide_from_menu'] = $content['hide_from_menu'];
             $data[$key]['type'] = $type['content_type_name'];
             $data[$key]['status'] = $status['status_title'];
-        }    
-        return new ViewModel(array('contents' => $data));
+        }   
+        return array('contents' => $data);
     }
     
     public function addAction() 

@@ -2,29 +2,36 @@
 
 namespace AdminCP\Model\Business;
 
-use Zend\Db\Table\AbstractTable;
-// 	AdminCP\Model\Entity\ContentType;
+use Zend\Db\TableGateway\TableGateway,
+    Zend\Db\Adapter\Adapter,
+    Zend\Db\ResultSet\ResultSet;
 
-class ContentType extends AbstractTable
+class ContentType extends TableGateway
 {
-	protected $_name = 'content_types';
-	protected $_referenceMap    = array(
-        'Content' => array(
-            'columns'           => array('content_type_id'),
-            'refTableClass'     => 'Content',
-            'refColumns'        => array('content_type_id')
-        ),
-	);
+    public function __construct(Adapter $adapter = null, $databaseSchema = null,
+            ResultSet $selectResultPrototype = null)
+    {
+        return parent::__construct('content_types', $adapter, $databaseSchema,
+                $selectResultPrototype);
+    }
+    
+    public function fetchAll()
+    {
+        $resultSet = $this->select();
+        return $resultSet;
+    }
+    
 	public function getContentType($id)
 	{
 		$id = (int) $id;
-		$row = $this->fetchRow('content_type_id = ' . $id);
+		$rowset = $this->select(array('content_type_id' => $id));
+		$row = $rowset->current();
 		if (!$row) {
-			throw new Exception("Could not find row $id");
+			throw new \Exception("Could not find row $id");
 		}
-		return $row->toArray();
+		return $row;
 	}
-	
+
 	public function addContentType($contentTypeName, $contentTypeDescription = '')
 	{
 		$data = array(
@@ -33,16 +40,19 @@ class ContentType extends AbstractTable
 		);
 		$this->insert($data);
 	}
+	
 	public function updateContentType($id, $contentTypeName, $contentTypeDescription)
 	{
 		$data = array(
 				'content_type_name' => $contentTypeName,
 				'content_type_description' => $contentTypeDescription,
 		);
-		$this->update($data, 'content_type_id = ' . (int) $id);
+		$this->update($data, array('content_type_id' => (int) $id));
 	}
+	
 	public function deleteContentType($id)
 	{
-		$this->delete('content_type_id =' . (int) $id);
+		$this->delete(array('id' =>(int) $id));
 	}
+	
 }

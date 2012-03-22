@@ -3,7 +3,8 @@ namespace AdminCP\Controller;
 
 use Zend\Mvc\Controller\ActionController,
 	AdminCP\Form\CategoryForm,
-	AdminCP\Model\Business\Category;
+	AdminCP\Model\Business\Category,
+    Zend\View\Model\ViewModel;
 
 class CategoryController extends ActionController
 {
@@ -11,9 +12,9 @@ class CategoryController extends ActionController
 
 	public function indexAction()
 	{
-		return array(
-			'categories' => $this->category->fetchAll(),
-		);
+		return new ViewModel(array(
+	            'categories' => $this->category->fetchAll(),
+	    ));
 	}
 	
 	public function addAction()
@@ -93,10 +94,13 @@ class CategoryController extends ActionController
 	    } else {
 	    	$id = $request->query()->get('id', 0);
 	    	if ($id > 0) {
-	    		$form->populate($this->category->getCategory($id));
+	    	    $category = $this->category->getCategory($id);
+	    	    if ($category) {
+	    	        $form->populate($category->getArrayCopy());
+	    	    }
 	    	}
 	    }
-	    return array('form' => $form);	    
+	    return new ViewModel(array('form' => $form));	    
 	}
 	
 	public function deleteAction()
@@ -115,7 +119,7 @@ class CategoryController extends ActionController
 	    	));
 	    }
 	    $id = $request->query()->get('id', 0);
-	    return array('category' => $this->category->getCategory($id));	    
+	    return new ViewModel(array('category' => $this->category->getCategory($id)));	    
 	}
 	
 	public function setCategory(Category $category)

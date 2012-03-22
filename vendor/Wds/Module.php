@@ -21,20 +21,4 @@ class Module implements AutoloaderProvider
             ),
         );
     }
-
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
-    
-    public function initializeView($e)
-    {
-        $app          = $e->getParam('wds');
-        $basePath     = $app->getRequest()->getBasePath();    
-        $locator      = $app->getLocator();
-        $renderer     = $locator->get('Zend\View\Renderer\PhpRenderer');
-        $renderer->doctype()->setDoctype('HTML5');
-        $renderer->plugin('url')->setRouter($app->getRouter());
-        $renderer->plugin('basePath')->setBasePath($basePath);
-    }
 }

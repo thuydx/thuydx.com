@@ -68,48 +68,41 @@ return array(
             		'categories' => 'AdminCP\Model\Business\Category',
                 ),
             ),
-                
+
             'AdminCP\Model\Business\Content' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Adapter',
+                	'adapter' => 'Zend\Db\Adapter\Adapter',
                 )
             ),
             'AdminCP\Model\Business\ContentType' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Adapter',
+                	'adapter' => 'Zend\Db\Adapter\Adapter',
                 )
             ),
             'AdminCP\Model\Business\ContentStatus' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Adapter',
+                	'adapter' => 'Zend\Db\Adapter\Adapter',
                 )
             ),
             'AdminCP\Model\Business\Category' => array(
                 'parameters' => array(
-                	'config' => 'Zend\Db\Adapter\Adapter',
+                	'adapter' => 'Zend\Db\Adapter\Adapter',
                 )
             ),                
             'Zend\Db\Adapter\Adapter' => array(
                 'parameters' => array(
                     'driver' => array(
-                            'driver' => 'Pdo',
-                            'username' => 'thuydx',
-                            'password' => 'thuydx@thuydx.com',
-                            'dsn'   => 'mysql:dbname=thuydx_blog;hostname=localhost',
+                        'driver' => 'Pdo',
+                        'dsn'            => 'mysql:dbname=thuydx_blog;hostname=localhost',
+                        'username'       => 'thuydx',
+                        'password'       => 'thuydx@thuydx.com',
+                        'driver_options' => array(
+                                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+                        ),
                     ),
                 )
-            ),
-//             'Zend\Db\Adapter\PdoMysql' => array(
-//             	'parameters' => array(
-//             		'config' => array(
-//             			'host' => '127.0.0.1',
-//             			'username' => 'thuydx',
-//             			'password' => 'thuydx@thuydx.com',
-//             			'dbname' => 'thuydx_blog',
-//             		),
-//             	),
-//             ),    
-                                                         
+            ),                
+                          
             // Setup the View layer
             'Zend\View\Resolver\AggregateResolver' => array(
                 'injections' => array(

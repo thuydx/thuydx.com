@@ -3,7 +3,8 @@ namespace AdminCP\Controller;
 
 use Zend\Mvc\Controller\ActionController,
 	AdminCP\Form\ContentTypeForm,
-	AdminCP\Model\Business\ContentType;
+	AdminCP\Model\Business\ContentType,
+    Zend\View\Model\ViewModel;
 
 class TypeController extends ActionController
 {
@@ -11,9 +12,9 @@ class TypeController extends ActionController
 
 	public function indexAction()
 	{
-	    return array(
-			'contentType' => $this->contentType->fetchAll(),
-		);
+	     return new ViewModel(array(
+	            'contentType' => $this->contentType->fetchAll(),
+	    ));
 	}
 
 	public function addAction()
@@ -58,7 +59,7 @@ class TypeController extends ActionController
 				if ($this->contentType->getContentType($id)) {
 					$this->contentType->updateContentType($id, $typeName, $typeDiscription);
 				}
-				// Redirect to list of albums
+				// Redirect to list of content type
 				return $this->redirect()->toRoute('default', array(
 				'controller' => 'admincp-content-type',
 				'action' => 'index',
@@ -67,7 +68,10 @@ class TypeController extends ActionController
 		} else {
 			$id = $request->query()->get('id', 0);
 			if ($id > 0) {
-				$form->populate($this->contentType->getContentType($id));
+			    $content = $this->contentType->getContentType($id);
+			    if ($content) {
+			        $form->populate($content->getArrayCopy());
+			    }
 			}
 		}
 		return array('form' => $form);

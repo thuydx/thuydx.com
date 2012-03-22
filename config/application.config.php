@@ -4,6 +4,8 @@ return array(
         'AdminCP',
         'Gallery',
         'Application',
+        //'DoctrineModule',
+        //'DoctrineORM',
     ),
     'module_listener_options' => array( 
         'config_cache_enabled' => false,

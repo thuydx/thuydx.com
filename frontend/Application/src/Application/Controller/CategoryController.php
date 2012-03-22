@@ -17,7 +17,6 @@ class CategoryController extends ActionController
     public function indexAction()
     {
     	$categoryId = $this->getRequest()->query()->get('id');
-
     	$listCategoryId = $this->category->getCategoryById($categoryId);
     	foreach ($listCategoryId as $catId)
     	{
