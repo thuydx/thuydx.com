@@ -7,3 +7,6 @@
 [Fri Mar 23 09:30:02 2012] [error] [client 133.242.17.75] Invalid URI in request GET HTTP/1.1 HTTP/1.1
 [Fri Mar 23 09:30:28 2012] [error] [client 133.242.17.75] Invalid URI in request GET  HTTP/1.1
 [Fri Mar 23 13:18:01 2012] [error] [client 203.86.26.141] client sent HTTP/1.1 request without hostname (see RFC2616 section 14.23): /w00tw00t.at.ISC.SANS.DFind:)
+[Fri Mar 23 15:35:20 2012] [error] [client 174.129.112.40] client sent invalid HTTP/0.9 request: HEAD HTTP/1.1
+[Fri Mar 23 15:35:22 2012] [error] [client 75.101.249.84] client sent invalid HTTP/0.9 request: HEAD HTTP/1.1
+[Sat Mar 24 06:19:25 2012] [error] [client 217.218.229.138] (20024)The given path is misformatted or contained invalid characters: Cannot map GET /w00tw00t.at.ISC.SANS.DFind:) HTTP/1.1 to file

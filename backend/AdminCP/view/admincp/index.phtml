@@ -1,3 +1,197 @@
-<strong>Module:</strong>        AdminCP &raquo; 
-<strong>Controller:</strong>    Index &raquo; 
-<strong>Action:</strong>        index
+<section class="grid_4">
+			<!--<div class="block-border"><div class="block-content">-->
+				<h1>Favourites</h1>
+				
+				<ul class="favorites no-margin with-tip" title="Context menu available!">
+					
+					<li>
+						<img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/48/Info.png" width="48" height="48">
+						<a href="#">Settings<br>
+						<small>System &gt; Settings</small></a>
+						<ul class="mini-menu">
+							<li><a href="#" title="Move down"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-270.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Delete"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/cross-circle.png" width="16" height="16"> Delete</a></li>
+						</ul>
+					</li>
+					
+					<li>
+						<img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/48/Line-Chart.png" width="48" height="48">
+						<a href="#">Bandwidth usage<br>
+						<small>Stats &gt; Server &gt; Bandwidth usage</small></a>
+						<ul class="mini-menu">
+							<li><a href="#" title="Move up"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-090.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Move down"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-270.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Delete"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/cross-circle.png" width="16" height="16"> Delete</a></li>
+						</ul>
+					</li>
+					
+					<li>
+						<img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/48/Modify.png" width="48" height="48">
+						<a href="#">New post<br>
+						<small>Write &gt; New post</small></a>
+						<ul class="mini-menu">
+							<li><a href="#" title="Move up"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-090.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Move down"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-270.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Delete"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/cross-circle.png" width="16" height="16"> Delete</a></li>
+						</ul>
+					</li>
+					
+					<li>
+						<img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/48/Pie-Chart.png" width="48" height="48">
+						<a href="#">Browsers stats<br>
+						<small>Stats &gt; Sites &gt; Browsers stats</small></a>
+						<ul class="mini-menu">
+							<li><a href="#" title="Move up"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-090.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Move down"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-270.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Delete"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/cross-circle.png" width="16" height="16"> Delete</a></li>
+						</ul>
+					</li>
+					
+					<li>
+						<img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/48/Comment.png" width="48" height="48">
+						<a href="#">Manage comments<br>
+						<small>Comments &gt; Manage comments</small></a>
+						<ul class="mini-menu">
+							<li><a href="#" title="Move up"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/arrow-090.png" width="16" height="16"></a></li>
+							<li><a href="#" title="Delete"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/cross-circle.png" width="16" height="16"> Delete</a></li>
+						</ul>
+					</li>
+					
+				</ul>
+				
+				<form class="form" name="stats_options" id="stats_options" method="post" action="">
+					<fieldset class="grey-bg no-margin">
+						<legend>Add favourite</legend>
+						<p class="input-with-button">
+							<label for="simple-action">Select page</label>
+							<select name="simple-action" id="simple-action">
+								<option value=""></option>
+								<option value="1">Page 1</option>
+								<option value="2">Page 2</option>
+							</select>
+							<button type="button">Add</button>
+						</p>
+					</fieldset>
+				</form>
+				
+			<!--</div></div>-->
+		</section>
+		
+		<section class="grid_8">
+			<div class="block-border"><div class="block-content">
+				<!-- We could put the menu inside a H1, but to get valid syntax we'll use a wrapper -->
+				<div class="h1 with-menu">
+					<h1>Web stats</h1>
+					<div class="menu">
+						<img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/menu-open-arrow.png" width="16" height="16">
+						<ul>
+							<li class="icon_address"><a href="#">Browse by</a>
+								<ul>
+									<li class="icon_blog"><a href="#">Blog</a>
+										<ul>
+											<li class="icon_alarm"><a href="#">Recents</a>
+												<ul>
+													<li class="icon_building"><a href="#">Corporate blog</a></li>
+													<li class="icon_newspaper"><a href="#">Press blog</a></li>
+												</ul>
+											</li>
+											<li class="icon_building"><a href="#">Corporate blog</a></li>
+											<li class="icon_computer"><a href="#">Support blog</a></li>
+											<li class="icon_search"><a href="#">Search...</a></li>
+										</ul>
+									</li>
+									<li class="icon_server"><a href="#">Website</a></li>
+									<li class="icon_network"><a href="#">Domain</a></li>
+								</ul>
+							</li>
+							<li class="icon_export"><a href="#">Export</a>
+								<ul>
+									<li class="icon_doc_excel"><a href="#">Excel</a></li>
+									<li class="icon_doc_csv"><a href="#">CSV</a></li>
+									<li class="icon_doc_pdf"><a href="#">PDF</a></li>
+									<li class="icon_doc_image"><a href="#">Image</a></li>
+									<li class="icon_doc_web"><a href="#">Html</a></li>
+								</ul>
+							</li>
+							<li class="sep"></li>
+							<li class="icon_refresh"><a href="#">Reload</a></li>
+							<li class="icon_reset">Reset</li>
+							<li class="icon_search"><a href="#">Search</a></li>
+							<li class="sep"></li>
+							<li class="icon_terminal"><a href="#">Custom request</a></li>
+							<li class="icon_battery"><a href="#">Stats server load</a></li>
+						</ul>
+					</div>
+				</div>
+			
+				<div class="block-controls">
+					
+					<ul class="controls-tabs js-tabs same-height with-children-tip">
+						<li><a href="#tab-stats" title="Charts"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/24/Bar-Chart.png" width="24" height="24"></a></li>
+						<li><a href="#tab-comments" title="Comments"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/24/Comment.png" width="24" height="24"></a></li>
+						<li><a href="#tab-medias" title="Medias"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/24/Picture.png" width="24" height="24"></a></li>
+						<li><a href="#tab-users" title="Users"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/24/Profile.png" width="24" height="24"></a></li>
+						<li><a href="#tab-infos" title="Informations"><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/web-app/24/Info.png" width="24" height="24"></a></li>
+					</ul>
+					
+				</div>
+				
+				<form class="form" id="tab-stats" method="post" action="">
+					
+					<fieldset class="grey-bg">
+						<legend><a href="#">Options</a></legend>
+						
+						<div class="float-left gutter-right">
+							<label for="stats-period">Period</label>
+							<span class="input-type-text"><input type="text" name="stats-period" id="stats-period" value=""><img src="<?php echo $this->url('baseUrl') ?>/templates/backend/default/images/icons/fugue/calendar-month.png" width="16" height="16"></span>
+						</div>
+						<div class="float-left gutter-right">
+							<span class="label">Display</span>
+							<p class="input-height grey-bg">
+								<input type="checkbox" name="stats-display[]" id="stats-display-0" value="0">&nbsp;<label for="stats-display-0">Views</label> 
+								<input type="checkbox" name="stats-display[]" id="stats-display-1" value="1">&nbsp;<label for="stats-display-1">Unique visitors</label>
+							</p> 
+						</div>
+						<div class="float-left gutter-right">
+							<span class="label">Sites</span>
+							<p class="input-height grey-bg">
+								<input type="radio" name="stats-sites" id="stats-sites-0" value="0">&nbsp;<label for="stats-sites-0">Group</label> 
+								<input type="radio" name="stats-sites" id="stats-sites-1" value="1">&nbsp;<label for="stats-sites-1">Separate</label>
+							</p>
+						</div>
+						<div class="float-left">
+							<span class="label">Mode</span>
+							<select name="stats-sites" id="stats-sites-0">
+								<option value="0">Bars</option>
+								<option value="0">Lines</option>
+							</select>
+						</div>
+					</fieldset>
+					<div id="chart_div" style="height:330px;"></div>
+					
+				</form>
+				
+				<div id="tab-comments" class="with-margin">
+					<!-- Content is loaded dynamically at bottom in the javascript section -->
+				</div>
+				
+				<div id="tab-medias" class="with-margin">
+					<p>Medias</p>
+				</div>
+				
+				<div id="tab-users" class="with-margin">
+					<p>Users</p>
+				</div>
+				
+				<div id="tab-infos" class="with-margin">
+					<p>Infos</p>
+				</div>
+				
+				<ul class="message no-margin">
+					<li>This is an <strong>information message</strong>, inside a box</li>
+				</ul>
+				
+			</div></div>
+		</section>
+		
+		<div class="clear"></div>

@@ -3,16 +3,16 @@ $this->headTitle()->setSeparator(' - ')
                   ->setAutoEscape(false);
 
 $basePath = $this->basePath();
-$this->headLink()->appendStylesheet($basePath . '/skins/bootstrap.min.css');
+$this->headLink()->appendStylesheet($basePath . 'templates/frontend/default/skins/bootstrap.min.css');
 
 $this->headLink(array(
             'rel'  => 'shortcut icon',
             'type' => 'image/vnd.microsoft.icon',
-            'href' => $basePath . '/images/favicon.ico',
+            'href' => $basePath . 'templates/frontend/default/images/favicon.ico',
         ));
 
 // HTML5 shim, for IE6-8 support of HTML elements
-$this->headScript()->appendFile($basePath . '/js/html5.js', 'text/javascript', 
+$this->headScript()->appendFile($basePath . 'templates/frontend/default/js/html5.js', 'text/javascript', 
     array('conditional' => 'lt IE9',));
 
 echo $this->doctype();
@@ -35,9 +35,9 @@ echo $this->doctype();
     <meta name="google-site-verification" content="AXR_oAg83vcRNm5ef90z-1tKn7b0itFEkyDt2Ks4lVA" />
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<?php echo $this->headLink() ?>
-	<link rel="stylesheet" href="<?php echo $basePath ?>/skins/reset.css">
-	<link rel="stylesheet" href="<?php echo $basePath ?>/skins/widget_css_bundle.css">    
-	<link rel="stylesheet" href="<?php echo $basePath ?>/skins/gray/styles.css">
+	<link rel="stylesheet" href="<?php echo $basePath ?>templates/frontend/default/skins/reset.css">
+	<link rel="stylesheet" href="<?php echo $basePath ?>templates/frontend/default/skins/widget_css_bundle.css">    
+	<link rel="stylesheet" href="<?php echo $basePath ?>templates/frontend/default/skins/gray/styles.css">
     
 	<script src="<?php echo $basePath ?>/js/libs/modernizr-2.0.6.min.js"></script>
 	<script src="<?php echo $basePath ?>/ckeditor/ckeditor.js"></script>
@@ -46,7 +46,7 @@ echo $this->doctype();
 <body>   
 <div id="container">
 	<header class="wrapper">
-        <img class="logo" src="<?php echo $basePath ?>/images/logo.png" width="120" height="120" style="float:left; margin-left: 5px;"/>
+        <img class="logo" src="<?php echo $basePath ?>templates/frontend/default/images/logo.png" width="120" height="120" style="float:left; margin-left: 5px;"/>
         <div class="header-text">
             <h1>
                 <a href="<?php echo $this->url('baseUrl') ?>">

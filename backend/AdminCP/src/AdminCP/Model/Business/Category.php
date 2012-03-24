@@ -82,20 +82,30 @@ class Category extends TableGateway
 	
 	public function getCategoryNotSelected($categoriesSelected = array())
 	{
+	    $categoriesId = array();
 	    foreach ($categoriesSelected as $key => $category) {
-	        $categoriesId[$key] = $category['category_id']; 
+	        $categoriesId[$key] = $category[0]['category_id']; 
 	    }
-        $categoriesId = implode(', ', $categoriesId);
-	    if (count($categoriesId) > 1) {
-    	    $categoriesId = substr($categoriesId, 0, -2);
+        $categoriesIds = implode(', ', $categoriesId);
+        $catId = '';
+	    if (count($categoriesIds) > 1) {
+    	    $catId = substr($categoriesIds, 0, -2);
 	    }    
-	    $rowset = $this->select(function (Select $select) {
-	        $select->from('categories');
-	        $select->where('category_id', 'NOT IN (' . $categoriesId . ')');
-	    });
-	    $row = $rowset->current();
-		//$rs = $this->getAdapter()->fetchAll("SELECT * FROM categories WHERE category_id NOT IN (" . $categoriesId .")");
-		return $row;
+	    $select = new Select();
+	    $select->from('categories')
+	    ->where('category_id', 'NOT IN (' . $catId . ')');
+	    $statement = $this->adapter->createStatement();
+	     
+	    $select->prepareStatement($this->adapter, $statement);
+	    $resultSet = new ResultSet();
+	    $resultSet->setDataSource($statement->execute());
+	    $result = $resultSet->toArray();
+// 	    $rowset = $this->select(function (Select $select) {
+// 	        $select->from('categories');
+// 	        $select->where('category_id', 'NOT IN (' . $catId . ')');
+// 	    });
+// 	    $row = $rowset->current();
+		return $result;
 	}
 	
 	public function getCategoryById($categoryId)

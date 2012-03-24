@@ -15,13 +15,7 @@ class ContentController extends ActionController
     protected $contentType;
     protected $contentStatus;
     protected $categories;
-    
-    public function __construct()
-    {
-//         $layoutViewModel = $this->layout();
-//         $layoutViewModel->setTemplate('layout/adminLayout');
-    }
-        
+            
     public function indexAction() 
     {
         $contents = $this->content->fetchAll();

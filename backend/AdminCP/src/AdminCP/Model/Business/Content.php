@@ -175,24 +175,27 @@ class Content extends TableGateway
 	    $contentId = (int) $contentId;
 	    $select = new Select;
 	    $select->from('category_associations')
-	    ->where->equalTo('content_id', $contentId);  
+	    //->where->equalTo('content_id', $contentId);
+	    ->where('content_id ="'.$contentId.'"');
 	    $statement = $this->adapter->createStatement();
-	     
 	    $select->prepareStatement($this->adapter, $statement);
 	     
 	    $resultSet = new ResultSet();
 	    $resultSet->setDataSource($statement->execute());
-
+	    
 	    foreach ($resultSet->toArray() as $key => $categoryId) {
-	        $select->from('categories')
+	        $catSelect = new Select();
+	        $catSelect->from('categories')
+	        //->where('category_id ="'.$categoryId['category_id'].'"');
 	        ->where->equalTo('category_id', $categoryId['category_id']);
-	        $statement = $this->adapter->createStatement();
+	        $catStatement = $this->adapter->createStatement();
 	        
-	        $select->prepareStatement($this->adapter, $statement);
-
-	        $resultSet->setDataSource($statement->execute());
-	        $categories[] = $resultSet->toArray();
+	        $catSelect->prepareStatement($this->adapter, $catStatement);
+            $catResultSet = new ResultSet();
+	        $catResultSet->setDataSource($catStatement->execute());
+	        $categories[] = $catResultSet->toArray();
 	    }
+	    
 	    return $categories;
 	}
 	
