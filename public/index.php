@@ -6,12 +6,15 @@ defined('WEB_ROOT')
 
 defined('ZF2_LIBRARY')
 || define('ZF2_LIBRARY', realpath((getenv('ZF2_PATH')?:'vendor\ZendFramework\library')));
+defined('DOCTRINE_LIBRARY')
+|| define('DOCTRINE_LIBRARY', realpath((getenv('DOCTRINE_PATH')?:'vendor\Doctrine')));
 
 defined('APPLICATION_ENV')
 || define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
 
 set_include_path(implode(PATH_SEPARATOR,array(
     ZF2_LIBRARY,
+    DOCTRINE_LIBRARY,
     get_include_path(),
 )));
 

@@ -10,3 +10,6 @@
 [Fri Mar 23 15:35:20 2012] [error] [client 174.129.112.40] client sent invalid HTTP/0.9 request: HEAD HTTP/1.1
 [Fri Mar 23 15:35:22 2012] [error] [client 75.101.249.84] client sent invalid HTTP/0.9 request: HEAD HTTP/1.1
 [Sat Mar 24 06:19:25 2012] [error] [client 217.218.229.138] (20024)The given path is misformatted or contained invalid characters: Cannot map GET /w00tw00t.at.ISC.SANS.DFind:) HTTP/1.1 to file
+[Mon Mar 26 18:46:08 2012] [error] [client 64.15.159.20] (20024)The given path is misformatted or contained invalid characters: Cannot map GET /w00tw00t.at.blackhats.romanian.anti-sec:) HTTP/1.1 to file
+[Mon Mar 26 18:46:16 2012] [error] [client 64.15.159.20] Invalid URI in request GET admin/scripts/setup.php HTTP/1.1
+[Mon Mar 26 18:47:44 2012] [error] [client 64.15.159.20] Invalid URI in request GET  HTTP/1.1

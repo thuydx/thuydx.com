@@ -11,6 +11,8 @@ class IndexController extends ActionController
     public $content;
 	public function indexAction()
     {
+//         $em = $this->getLocator()->get('doctrine_em');
+//         echo "<pre>"; var_dump($em); die();
         $contentId = $this->content->fetchAll();
         foreach ($contentId as $content)
         {
@@ -21,10 +23,10 @@ class IndexController extends ActionController
     
     public function articleAction()
     {
-//         $contentId = $this->getRequest()->query()->get('id');
-//         $data = $this->content->getContentDetail($contentId);
+        $contentId = $this->getRequest()->query()->get('id');
+        $data = $this->content->getContentDetail($contentId);
         
-//         return new ViewModel(array('data' => $data));
+        return new ViewModel(array('data' => $data));
     }
     
     public function setContent(FContent $content)

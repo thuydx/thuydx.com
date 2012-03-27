@@ -21,6 +21,7 @@ class Category extends TableGateway
         $resultSet = $this->select();
         return $resultSet;
     }
+    
 	public function getCategory($id)
 	{
 		$id = (int) $id;

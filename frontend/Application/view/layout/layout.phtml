@@ -76,12 +76,12 @@ echo $this->doctype();
                         </li>
                         <li><a href="#" title="About">About</a>
                         	<ul>
-                            	<li><a href="#" title="Profile">Profile</a></li>
-                            	<li><a href="#" title="Profile">Portfolio</a></li>
-                            	<li><a href="#" title="Profile">Curriculum Vitae</a></li>
+                            	<li><a href="<?php echo $this->url('baseUrl') . '/profiles' ?>" title="Profile">Profile</a></li>
+                            	<li><a href="<?php echo $this->url('baseUrl') . '/portfolio' ?>" title="Portfolio">Portfolio</a></li>
+                            	<li><a href="<?php echo $this->url('baseUrl') . '/resume' ?>" title="Curriculum Vitae">Curriculum Vitae</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" title="Contact">Contact</a></li>
+                        <li><a href="<?php echo $this->url('baseUrl') . '/contact' ?>" title="Contact">Contact</a></li>
                     </ul>
                 </nav>
             </div>	    
