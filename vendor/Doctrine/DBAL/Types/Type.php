@@ -48,7 +48,6 @@ abstract class Type
     const TEXT = 'text';
     const BLOB = 'blob';
     const FLOAT = 'float';
-    const GUID = 'guid';
 
     /** Map of already instantiated type objects. One instance per type (flyweight). */
     private static $_typeObjects = array();
@@ -70,7 +69,6 @@ abstract class Type
         self::DECIMAL => 'Doctrine\DBAL\Types\DecimalType',
         self::FLOAT => 'Doctrine\DBAL\Types\FloatType',
         self::BLOB => 'Doctrine\DBAL\Types\BlobType',
-        self::GUID => 'Doctrine\DBAL\Types\GuidType',
     );
 
     /* Prevent instantiation and force use of the factory method. */
@@ -135,7 +133,7 @@ abstract class Type
      * @static
      * @throws DBALException
      * @param string $name The name of the type (as returned by getName()).
-     * @return \Doctrine\DBAL\Types\Type
+     * @return Doctrine\DBAL\Types\Type
      */
     public static function getType($name)
     {

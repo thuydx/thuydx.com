@@ -141,16 +141,16 @@ class DropSchemaSqlCollector implements Visitor
     public function getQueries()
     {
         $sql = array();
-        foreach ($this->constraints as $fkConstraint) {
+        foreach ($this->constraints AS $fkConstraint) {
             $localTable = $this->constraints[$fkConstraint];
             $sql[] = $this->platform->getDropForeignKeySQL($fkConstraint, $localTable);
         }
 
-        foreach ($this->sequences as $sequence) {
+        foreach ($this->sequences AS $sequence) {
             $sql[] = $this->platform->getDropSequenceSQL($sequence);
         }
 
-        foreach ($this->tables as $table) {
+        foreach ($this->tables AS $table) {
             $sql[] = $this->platform->getDropTableSQL($table);
         }
 

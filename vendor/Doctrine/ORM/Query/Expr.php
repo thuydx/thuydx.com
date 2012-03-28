@@ -562,8 +562,6 @@ class Expr
     {
         if (is_numeric($literal) && !is_string($literal)) {
             return (string) $literal;
-        } else if (is_bool($literal)) {
-            return $literal ? "true" : "false";
         } else {
             return "'" . str_replace("'", "''", $literal) . "'";
         }

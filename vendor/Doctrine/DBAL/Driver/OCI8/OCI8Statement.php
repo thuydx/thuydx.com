@@ -41,7 +41,6 @@ class OCI8Statement implements \IteratorAggregate, Statement
         PDO::FETCH_ASSOC => OCI_ASSOC,
         PDO::FETCH_NUM => OCI_NUM,
         PDO::PARAM_LOB => OCI_B_BLOB,
-        PDO::FETCH_COLUMN => OCI_NUM,
     );
     protected $_defaultFetchStyle = PDO::FETCH_BOTH;
     protected $_paramMap = array();
@@ -228,23 +227,8 @@ class OCI8Statement implements \IteratorAggregate, Statement
         }
 
         $result = array();
-        if (self::$fetchStyleMap[$fetchStyle] === OCI_BOTH) {
-            while ($row = $this->fetch($fetchStyle)) {
-                $result[] = $row;
-            }
-        } else {
-            $fetchStructure = OCI_FETCHSTATEMENT_BY_ROW;
-            if ($fetchStyle == PDO::FETCH_COLUMN) {
-                $fetchStructure = OCI_FETCHSTATEMENT_BY_COLUMN;
-            }
-
-            oci_fetch_all($this->_sth, $result, 0, -1,
-                    self::$fetchStyleMap[$fetchStyle] | OCI_RETURN_NULLS | $fetchStructure | OCI_RETURN_LOBS);
-
-            if ($fetchStyle == PDO::FETCH_COLUMN) {
-                $result = $result[0];
-            }
-        }
+        oci_fetch_all($this->_sth, $result, 0, -1,
+            self::$fetchStyleMap[$fetchStyle] | OCI_RETURN_NULLS | OCI_FETCHSTATEMENT_BY_ROW | OCI_RETURN_LOBS);
 
         return $result;
     }

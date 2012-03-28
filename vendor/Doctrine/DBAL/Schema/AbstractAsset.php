@@ -123,7 +123,7 @@ abstract class AbstractAsset
     public function getFullQualifiedName($defaultNamespaceName)
     {
         $name = $this->getName();
-        if ( ! $this->_namespace) {
+        if (!$this->_namespace) {
             $name = $defaultNamespaceName . "." . $name;
         }
         return strtolower($name);
@@ -175,7 +175,7 @@ abstract class AbstractAsset
     {
         $keywords = $platform->getReservedKeywordsList();
         $parts = explode(".", $this->getName());
-        foreach ($parts as $k => $v) {
+        foreach ($parts AS $k => $v) {
             $parts[$k] = ($this->_quoted || $keywords->isKeyword($v)) ? $platform->quoteIdentifier($v) : $v;
         }
 

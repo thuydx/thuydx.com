@@ -61,7 +61,7 @@ class ReservedKeywordsValidator implements Visitor
         }
 
         $keywordLists = array();
-        foreach ($this->keywordLists as $keywordList) {
+        foreach ($this->keywordLists AS $keywordList) {
             if ($keywordList->isKeyword($word)) {
                 $keywordLists[] = $keywordList->getName();
             }
@@ -71,7 +71,7 @@ class ReservedKeywordsValidator implements Visitor
 
     private function addViolation($asset, $violatedPlatforms)
     {
-        if ( ! $violatedPlatforms) {
+        if (!$violatedPlatforms) {
             return;
         }
 

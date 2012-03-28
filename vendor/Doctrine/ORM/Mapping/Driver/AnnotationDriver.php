@@ -197,10 +197,6 @@ class AnnotationDriver implements Driver
                 }
             }
 
-            if ($tableAnnot->options !== null) {
-                $primaryTable['options'] = $tableAnnot->options;
-            }
-
             $metadata->setPrimaryTable($primaryTable);
         }
 
@@ -235,8 +231,7 @@ class AnnotationDriver implements Driver
                     $metadata->setDiscriminatorColumn(array(
                         'name' => $discrColumnAnnot->name,
                         'type' => $discrColumnAnnot->type,
-                        'length' => $discrColumnAnnot->length,
-                        'columnDefinition'    => $discrColumnAnnot->columnDefinition
+                        'length' => $discrColumnAnnot->length
                     ));
                 } else {
                     $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));

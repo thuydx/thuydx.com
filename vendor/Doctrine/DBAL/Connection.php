@@ -584,7 +584,7 @@ class Connection implements DriverConnection
      * Prepares an SQL statement.
      *
      * @param string $statement The SQL statement to prepare.
-     * @return \Doctrine\DBAL\Driver\Statement The prepared statement.
+     * @return Doctrine\DBAL\Driver\Statement The prepared statement.
      */
     public function prepare($statement)
     {
@@ -603,7 +603,7 @@ class Connection implements DriverConnection
      * @param array $params The parameters to bind to the query, if any.
      * @param array $types The types the previous parameters are in.
      * @param QueryCacheProfile $qcp
-     * @return \Doctrine\DBAL\Driver\Statement The executed statement.
+     * @return Doctrine\DBAL\Driver\Statement The executed statement.
      * @internal PERF: Directly prepares a driver statement, not a wrapper.
      */
     public function executeQuery($query, array $params = array(), $types = array(), QueryCacheProfile $qcp = null)
@@ -614,9 +614,9 @@ class Connection implements DriverConnection
 
         $this->connect();
 
-        $logger = $this->_config->getSQLLogger();
-        if ($logger) {
-            $logger->startQuery($query, $params, $types);
+        $hasLogger = $this->_config->getSQLLogger() !== null;
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->startQuery($query, $params, $types);
         }
 
         if ($params) {
@@ -633,8 +633,8 @@ class Connection implements DriverConnection
             $stmt = $this->_conn->query($query);
         }
 
-        if ($logger) {
-            $logger->stopQuery();
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->stopQuery();
         }
 
         return $stmt;
@@ -652,7 +652,7 @@ class Connection implements DriverConnection
     public function executeCacheQuery($query, $params, $types, QueryCacheProfile $qcp)
     {
         $resultCache = $qcp->getResultCacheDriver() ?: $this->_config->getResultCacheImpl();
-        if ( ! $resultCache) {
+        if (!$resultCache) {
             throw CacheException::noResultDriverConfigured();
         }
 
@@ -700,7 +700,7 @@ class Connection implements DriverConnection
      *
      * @param string $statement
      * @param integer $fetchType
-     * @return \Doctrine\DBAL\Driver\Statement
+     * @return Doctrine\DBAL\Driver\Statement
      */
     public function query()
     {
@@ -708,7 +708,7 @@ class Connection implements DriverConnection
 
         $args = func_get_args();
 
-        $logger = $this->_config->getSQLLogger();
+        $logger = $this->getConfiguration()->getSQLLogger();
         if ($logger) {
             $logger->startQuery($args[0]);
         }
@@ -738,9 +738,9 @@ class Connection implements DriverConnection
     {
         $this->connect();
 
-        $logger = $this->_config->getSQLLogger();
-        if ($logger) {
-            $logger->startQuery($query, $params, $types);
+        $hasLogger = $this->_config->getSQLLogger() !== null;
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->startQuery($query, $params, $types);
         }
 
         if ($params) {
@@ -758,8 +758,8 @@ class Connection implements DriverConnection
             $result = $this->_conn->exec($query);
         }
 
-        if ($logger) {
-            $logger->stopQuery();
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->stopQuery();
         }
 
         return $result;
@@ -774,19 +774,7 @@ class Connection implements DriverConnection
     public function exec($statement)
     {
         $this->connect();
-
-        $logger = $this->_config->getSQLLogger();
-        if ($logger) {
-            $logger->startQuery($statement);
-        }
-
-        $result = $this->_conn->exec($statement);
-
-        if ($logger) {
-            $logger->stopQuery();
-        }
-
-        return $result;
+        return $this->_conn->exec($statement);
     }
 
     /**
@@ -872,7 +860,7 @@ class Connection implements DriverConnection
             throw ConnectionException::mayNotAlterNestedTransactionWithSavepointsInTransaction();
         }
 
-        if ( ! $this->_platform->supportsSavepoints()) {
+        if (!$this->_platform->supportsSavepoints()) {
             throw ConnectionException::savepointsNotSupported();
         }
 
@@ -911,24 +899,10 @@ class Connection implements DriverConnection
 
         ++$this->_transactionNestingLevel;
 
-        $logger = $this->_config->getSQLLogger();
-
         if ($this->_transactionNestingLevel == 1) {
-            if ($logger) {
-                $logger->startQuery('"START TRANSACTION"');
-            }
             $this->_conn->beginTransaction();
-            if ($logger) {
-                $logger->stopQuery();
-            }
         } else if ($this->_nestTransactionsWithSavepoints) {
-            if ($logger) {
-                $logger->startQuery('"SAVEPOINT"');
-            }
             $this->createSavepoint($this->_getNestedTransactionSavePointName());
-            if ($logger) {
-                $logger->stopQuery();
-            }
         }
     }
 
@@ -950,24 +924,10 @@ class Connection implements DriverConnection
 
         $this->connect();
 
-        $logger = $this->_config->getSQLLogger();
-
         if ($this->_transactionNestingLevel == 1) {
-            if ($logger) {
-                $logger->startQuery('"COMMIT"');
-            }
             $this->_conn->commit();
-            if ($logger) {
-                $logger->stopQuery();
-            }
         } else if ($this->_nestTransactionsWithSavepoints) {
-            if ($logger) {
-                $logger->startQuery('"RELEASE SAVEPOINT"');
-            }
             $this->releaseSavepoint($this->_getNestedTransactionSavePointName());
-            if ($logger) {
-                $logger->stopQuery();
-            }
         }
 
         --$this->_transactionNestingLevel;
@@ -989,27 +949,13 @@ class Connection implements DriverConnection
 
         $this->connect();
 
-        $logger = $this->_config->getSQLLogger();
-
         if ($this->_transactionNestingLevel == 1) {
-            if ($logger) {
-                $logger->startQuery('"ROLLBACK"');
-            }
             $this->_transactionNestingLevel = 0;
             $this->_conn->rollback();
             $this->_isRollbackOnly = false;
-            if ($logger) {
-                $logger->stopQuery();
-            }
         } else if ($this->_nestTransactionsWithSavepoints) {
-            if ($logger) {
-                $logger->startQuery('"ROLLBACK TO SAVEPOINT"');
-            }
             $this->rollbackSavepoint($this->_getNestedTransactionSavePointName());
             --$this->_transactionNestingLevel;
-            if ($logger) {
-                $logger->stopQuery();
-            }
         } else {
             $this->_isRollbackOnly = true;
             --$this->_transactionNestingLevel;
@@ -1025,7 +971,7 @@ class Connection implements DriverConnection
      */
     public function createSavepoint($savepoint)
     {
-        if ( ! $this->_platform->supportsSavepoints()) {
+        if (!$this->_platform->supportsSavepoints()) {
             throw ConnectionException::savepointsNotSupported();
         }
 
@@ -1041,7 +987,7 @@ class Connection implements DriverConnection
      */
     public function releaseSavepoint($savepoint)
     {
-        if ( ! $this->_platform->supportsSavepoints()) {
+        if (!$this->_platform->supportsSavepoints()) {
             throw ConnectionException::savepointsNotSupported();
         }
 
@@ -1059,7 +1005,7 @@ class Connection implements DriverConnection
      */
     public function rollbackSavepoint($savepoint)
     {
-        if ( ! $this->_platform->supportsSavepoints()) {
+        if (!$this->_platform->supportsSavepoints()) {
             throw ConnectionException::savepointsNotSupported();
         }
 
@@ -1069,7 +1015,7 @@ class Connection implements DriverConnection
     /**
      * Gets the wrapped driver connection.
      *
-     * @return \Doctrine\DBAL\Driver\Connection
+     * @return Doctrine\DBAL\Driver\Connection
      */
     public function getWrappedConnection()
     {
@@ -1082,7 +1028,7 @@ class Connection implements DriverConnection
      * Gets the SchemaManager that can be used to inspect or change the
      * database schema through the connection.
      *
-     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @return Doctrine\DBAL\Schema\AbstractSchemaManager
      */
     public function getSchemaManager()
     {
@@ -1164,7 +1110,7 @@ class Connection implements DriverConnection
             // Positional parameters
             $typeOffset = array_key_exists(0, $types) ? -1 : 0;
             $bindIndex = 1;
-            foreach ($params as $value) {
+            foreach ($params as $position => $value) {
                 $typeIndex = $bindIndex + $typeOffset;
                 if (isset($types[$typeIndex])) {
                     $type = $types[$typeIndex];

@@ -102,7 +102,7 @@ class Column extends AbstractAsset
      * Create a new Column
      *
      * @param string $columnName
-     * @param \Doctrine\DBAL\Types\Type $type
+     * @param Doctrine\DBAL\Types\Type $type
      * @param int $length
      * @param bool $notNull
      * @param mixed $default
@@ -125,7 +125,7 @@ class Column extends AbstractAsset
      */
     public function setOptions(array $options)
     {
-        foreach ($options as $name => $value) {
+        foreach ($options AS $name => $value) {
             $method = "set".$name;
             if (method_exists($this, $method)) {
                 $this->$method($value);

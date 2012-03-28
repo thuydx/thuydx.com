@@ -70,14 +70,6 @@ interface ObjectManager
      * @param object $object
      */
     function merge($object);
-    
-    /**
-     * Clears the ObjectManager. All objects that are currently managed
-     * by this ObjectManager become detached.
-     *
-     * @param string $objectName if given, only objects of this type will get detached
-     */
-    function clear($objectName = null);
 
     /**
      * Detaches an object from the ObjectManager, causing a managed object to

@@ -46,12 +46,12 @@ class DateType extends Type
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        if ($value === null || $value instanceof \DateTime) {
-            return $value;
+        if ($value === null) {
+            return null;
         }
 
         $val = \DateTime::createFromFormat('!'.$platform->getDateFormatString(), $value);
-        if ( ! $val) {
+        if (!$val) {
             throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateFormatString());
         }
         return $val;

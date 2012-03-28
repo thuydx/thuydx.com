@@ -43,7 +43,7 @@ class SqlWalker implements TreeWalker
      * @var string
      */
     const HINT_DISTINCT = 'doctrine.distinct';
-
+  
     /**
      * @var ResultSetMapping
      */
@@ -440,14 +440,12 @@ class SqlWalker implements TreeWalker
                     $sql .= ' ' . $this->_platform->getWriteLockSQL();
                     break;
 
-                case LockMode::OPTIMISTIC:
+                case LockMode::PESSIMISTIC_OPTIMISTIC:
                     foreach ($this->_selectedClasses AS $selectedClass) {
-                        if ( ! $selectedClass['class']->isVersioned) {
+                        if ( ! $class->isVersioned) {
                             throw \Doctrine\ORM\OptimisticLockException::lockFailed($selectedClass['class']->name);
                         }
                     }
-                    break;
-                case LockMode::NONE:
                     break;
 
                 default:
@@ -1103,7 +1101,7 @@ class SqlWalker implements TreeWalker
 
                 $sqlTableAlias = $this->getSQLTableAlias($tableName, $dqlAlias);
                 $columnName    = $class->getQuotedColumnName($fieldName, $this->_platform);
-                $columnAlias   = $this->getSQLColumnAlias($class->fieldMappings[$fieldName]['columnName']);
+                $columnAlias   = $this->getSQLColumnAlias($columnName);
 
                 $col = $sqlTableAlias . '.' . $columnName;
 
@@ -1974,16 +1972,12 @@ class SqlWalker implements TreeWalker
             $dqlParamKey = $inputParam->name;
             $this->_parserResult->addParameterMapping($dqlParamKey, $this->_sqlParamIndex++);
             $sql .= '?';
-        } elseif ($likeExpr->stringPattern instanceof AST\Functions\FunctionNode ) {
-            $sql .= $this->walkFunction($likeExpr->stringPattern);
-        } elseif ($likeExpr->stringPattern instanceof AST\PathExpression) {
-            $sql .= $this->walkPathExpression($likeExpr->stringPattern);
         } else {
-            $sql .= $this->walkLiteral($likeExpr->stringPattern);
+            $sql .= $this->_conn->quote($likeExpr->stringPattern);
         }
 
         if ($likeExpr->escapeChar) {
-            $sql .= ' ESCAPE ' . $this->walkLiteral($likeExpr->escapeChar);
+            $sql .= ' ESCAPE ' . $this->_conn->quote($likeExpr->escapeChar);
         }
 
         return $sql;

@@ -59,7 +59,7 @@ class Driver implements \Doctrine\DBAL\Driver
             $driverOptions
         );
 
-        foreach ($this->_userDefinedFunctions as $fn => $data) {
+        foreach ($this->_userDefinedFunctions AS $fn => $data) {
             $pdo->sqliteCreateFunction($fn, $data['callback'], $data['numArgs']);
         }
 
@@ -95,8 +95,8 @@ class Driver implements \Doctrine\DBAL\Driver
     /**
      * Gets the schema manager that is relevant for this driver.
      *
-     * @param \Doctrine\DBAL\Connection $conn
-     * @return \Doctrine\DBAL\Schema\SqliteSchemaManager
+     * @param Doctrine\DBAL\Connection $conn
+     * @return Doctrine\DBAL\Schema\SqliteSchemaManager
      */
     public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
     {

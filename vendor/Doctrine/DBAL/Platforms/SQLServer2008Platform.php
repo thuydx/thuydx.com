@@ -63,14 +63,6 @@ class SQLServer2008Platform extends SQLServer2005Platform
 
     /**
      * @override
-     */
-    public function getDateTimeTzFormatString()
-    {
-        return 'Y-m-d H:i:s.u P';
-    }
-
-    /**
-     * @override
 	 */
     public function getDateFormatString()
     {

@@ -460,7 +460,7 @@ class MySqlPlatform extends AbstractPlatform
             $queryParts[] =  'RENAME TO ' . $diff->newName;
         }
 
-        foreach ($diff->addedColumns as $column) {
+        foreach ($diff->addedColumns AS $fieldName => $column) {
             if ($this->onSchemaAlterTableAddColumn($column, $diff, $columnSql)) {
                 continue;
             }
@@ -470,7 +470,7 @@ class MySqlPlatform extends AbstractPlatform
             $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $columnArray);
         }
 
-        foreach ($diff->removedColumns as $column) {
+        foreach ($diff->removedColumns AS $column) {
             if ($this->onSchemaAlterTableRemoveColumn($column, $diff, $columnSql)) {
                 continue;
             }
@@ -478,7 +478,7 @@ class MySqlPlatform extends AbstractPlatform
             $queryParts[] =  'DROP ' . $column->getQuotedName($this);
         }
 
-        foreach ($diff->changedColumns as $columnDiff) {
+        foreach ($diff->changedColumns AS $columnDiff) {
             if ($this->onSchemaAlterTableChangeColumn($columnDiff, $diff, $columnSql)) {
                 continue;
             }
@@ -491,7 +491,7 @@ class MySqlPlatform extends AbstractPlatform
                     . $this->getColumnDeclarationSQL($column->getQuotedName($this), $columnArray);
         }
 
-        foreach ($diff->renamedColumns as $oldColumnName => $column) {
+        foreach ($diff->renamedColumns AS $oldColumnName => $column) {
             if ($this->onSchemaAlterTableRenameColumn($oldColumnName, $column, $diff, $columnSql)) {
                 continue;
             }
@@ -505,7 +505,7 @@ class MySqlPlatform extends AbstractPlatform
         $sql = array();
         $tableSql = array();
 
-        if ( ! $this->onSchemaAlterTable($diff, $tableSql)) {
+        if (!$this->onSchemaAlterTable($diff, $tableSql)) {
             if (count($queryParts) > 0) {
                 $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . implode(", ", $queryParts);
             }
@@ -518,64 +518,6 @@ class MySqlPlatform extends AbstractPlatform
 
         return array_merge($sql, $tableSql, $columnSql);
     }
-
-    /**
-     * Fix for DROP/CREATE index after foreign key change from OneToOne to ManyToOne
-     *
-     * @param TableDiff $diff
-     * @return array
-     */
-    protected function getPreAlterTableIndexForeignKeySQL(TableDiff $diff)
-    {
-        $sql = array();
-        $table = $diff->name;
-
-        foreach ($diff->removedIndexes as $remKey => $remIndex) {
-
-            foreach ($diff->addedIndexes as $addKey => $addIndex) {
-                if ($remIndex->getColumns() == $addIndex->getColumns()) {
-
-                    $columns = $addIndex->getColumns();
-                    $type = '';
-                    if ($addIndex->isUnique()) {
-                        $type = 'UNIQUE ';
-                    }
-
-                    $query = 'ALTER TABLE ' . $table . ' DROP INDEX ' . $remIndex->getName() . ', ';
-                    $query .= 'ADD ' . $type . 'INDEX ' . $addIndex->getName();
-                    $query .= ' (' . $this->getIndexFieldDeclarationListSQL($columns) . ')';
-
-                    $sql[] = $query;
-
-                    unset($diff->removedIndexes[$remKey]);
-                    unset($diff->addedIndexes[$addKey]);
-
-                    break;
-                }
-            }
-        }
-
-        $sql = array_merge($sql, parent::getPreAlterTableIndexForeignKeySQL($diff));
-
-        return $sql;
-    }
-
-
-    /**
-     * @override
-     */
-    protected function getCreateIndexSQLFlags(Index $index)
-    {
-        $type = '';
-        if ($index->isUnique()) {
-            $type .= 'UNIQUE ';
-        } else if ($index->hasFlag('fulltext')) {
-            $type .= 'FULLTEXT ';
-        }
-
-        return $type;
-    }
-
 
     /**
      * Obtain DBMS specific SQL code portion needed to declare an integer type

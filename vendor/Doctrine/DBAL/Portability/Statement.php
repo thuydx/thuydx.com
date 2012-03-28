@@ -56,8 +56,8 @@ class Statement implements \IteratorAggregate, \Doctrine\DBAL\Driver\Statement
     /**
      * Wraps <tt>Statement</tt> and applies portability measures
      *
-     * @param \Doctrine\DBAL\Driver\Statement $stmt
-     * @param \Doctrine\DBAL\Connection $conn
+     * @param Doctrine\DBAL\Driver\Statement $stmt
+     * @param Doctrine\DBAL\Connection $conn
      */
     public function __construct($stmt, Connection $conn)
     {
@@ -134,11 +134,11 @@ class Statement implements \IteratorAggregate, \Doctrine\DBAL\Driver\Statement
 
         $iterateRow = $this->portability & (Connection::PORTABILITY_EMPTY_TO_NULL|Connection::PORTABILITY_RTRIM);
         $fixCase = !is_null($this->case) && ($fetchStyle == PDO::FETCH_ASSOC || $fetchStyle == PDO::FETCH_BOTH) && ($this->portability & Connection::PORTABILITY_FIX_CASE);
-        if ( ! $iterateRow && !$fixCase) {
+        if (!$iterateRow && !$fixCase) {
             return $rows;
         }
 
-        foreach ($rows as $num => $row) {
+        foreach ($rows AS $num => $row) {
             $rows[$num] = $this->fixRow($row, $iterateRow, $fixCase);
         }
 
@@ -147,7 +147,7 @@ class Statement implements \IteratorAggregate, \Doctrine\DBAL\Driver\Statement
 
     protected function fixRow($row, $iterateRow, $fixCase)
     {
-        if ( ! $row) {
+        if (!$row) {
             return $row;
         }
 
@@ -156,7 +156,7 @@ class Statement implements \IteratorAggregate, \Doctrine\DBAL\Driver\Statement
         }
 
         if ($iterateRow) {
-            foreach ($row as $k => $v) {
+            foreach ($row AS $k => $v) {
                 if (($this->portability & Connection::PORTABILITY_EMPTY_TO_NULL) && $v === '') {
                     $row[$k] = null;
                 } else if (($this->portability & Connection::PORTABILITY_RTRIM) && is_string($v)) {

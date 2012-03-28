@@ -59,7 +59,7 @@ class Statement implements \IteratorAggregate, DriverStatement
      * Creates a new <tt>Statement</tt> for the given SQL and <tt>Connection</tt>.
      *
      * @param string $sql The SQL of the statement.
-     * @param \Doctrine\DBAL\Connection The connection on which the statement should be executed.
+     * @param Doctrine\DBAL\Connection The connection on which the statement should be executed.
      */
     public function __construct($sql, Connection $conn)
     {
@@ -123,15 +123,15 @@ class Statement implements \IteratorAggregate, DriverStatement
      */
     public function execute($params = null)
     {
-        $logger = $this->conn->getConfiguration()->getSQLLogger();
-        if ($logger) {
-            $logger->startQuery($this->sql, $this->params);
+        $hasLogger = $this->conn->getConfiguration()->getSQLLogger();
+        if ($hasLogger) {
+            $this->conn->getConfiguration()->getSQLLogger()->startQuery($this->sql, $this->params);
         }
 
         $stmt = $this->stmt->execute($params);
 
-        if ($logger) {
-            $logger->stopQuery();
+        if ($hasLogger) {
+            $this->conn->getConfiguration()->getSQLLogger()->stopQuery();
         }
         $this->params = array();
         return $stmt;
@@ -238,7 +238,7 @@ class Statement implements \IteratorAggregate, DriverStatement
     /**
      * Gets the wrapped driver statement.
      *
-     * @return \Doctrine\DBAL\Driver\Statement
+     * @return Doctrine\DBAL\Driver\Statement
      */
     public function getWrappedStatement()
     {

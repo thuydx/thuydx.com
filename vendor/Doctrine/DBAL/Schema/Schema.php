@@ -84,10 +84,10 @@ class Schema extends AbstractAsset
         $this->_schemaConfig = $schemaConfig;
         $this->_setName($schemaConfig->getName() ?: 'public');
 
-        foreach ($tables as $table) {
+        foreach ($tables AS $table) {
             $this->_addTable($table);
         }
-        foreach ($sequences as $sequence) {
+        foreach ($sequences AS $sequence) {
             $this->_addSequence($sequence);
         }
     }
@@ -155,9 +155,6 @@ class Schema extends AbstractAsset
      */
     private function getFullQualifiedAssetName($name)
     {
-        if ($this->isQuoted($name)) {
-            $name = $this->trimQuotes($name);
-        }
         if (strpos($name, ".") === false) {
             $name = $this->getName() . "." . $name;
         }
@@ -196,7 +193,7 @@ class Schema extends AbstractAsset
     /**
      * @throws SchemaException
      * @param  string $sequenceName
-     * @return \Doctrine\DBAL\Schema\Sequence
+     * @return Doctrine\DBAL\Schema\Sequence
      */
     public function getSequence($sequenceName)
     {
@@ -208,7 +205,7 @@ class Schema extends AbstractAsset
     }
 
     /**
-     * @return \Doctrine\DBAL\Schema\Sequence[]
+     * @return Doctrine\DBAL\Schema\Sequence[]
      */
     public function getSequences()
     {
@@ -342,10 +339,10 @@ class Schema extends AbstractAsset
     {
         $visitor->acceptSchema($this);
 
-        foreach ($this->_tables as $table) {
+        foreach ($this->_tables AS $table) {
             $table->visit($visitor);
         }
-        foreach ($this->_sequences as $sequence) {
+        foreach ($this->_sequences AS $sequence) {
             $sequence->visit($visitor);
         }
     }
@@ -357,10 +354,10 @@ class Schema extends AbstractAsset
      */
     public function __clone()
     {
-        foreach ($this->_tables as $k => $table) {
+        foreach ($this->_tables AS $k => $table) {
             $this->_tables[$k] = clone $table;
         }
-        foreach ($this->_sequences as $k => $sequence) {
+        foreach ($this->_sequences AS $k => $sequence) {
             $this->_sequences[$k] = clone $sequence;
         }
     }

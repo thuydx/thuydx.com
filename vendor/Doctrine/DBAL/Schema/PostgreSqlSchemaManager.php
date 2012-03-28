@@ -194,7 +194,7 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
     protected function _getPortableTableIndexesList($tableIndexes, $tableName=null)
     {
         $buffer = array();
-        foreach ($tableIndexes as $row) {
+        foreach ($tableIndexes AS $row) {
             $colNumbers = explode(' ', $row['indkey']);
             $colNumbersSql = 'IN (' . join(' ,', $colNumbers) . ' )';
             $columnNameSql = "SELECT attnum, attname FROM pg_attribute
@@ -204,7 +204,7 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
             $indexColumns = $stmt->fetchAll();
 
             // required for getting the order of the columns right.
-            foreach ($colNumbers as $colNum) {
+            foreach ($colNumbers AS $colNum) {
                 foreach ($indexColumns as $colRow) {
                     if ($colNum == $colRow['attnum']) {
                         $buffer[] = array(

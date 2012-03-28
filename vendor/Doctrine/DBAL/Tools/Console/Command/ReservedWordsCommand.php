@@ -97,12 +97,12 @@ EOT
         $conn = $this->getHelper('db')->getConnection();
 
         $keywordLists = (array)$input->getOption('list');
-        if ( ! $keywordLists) {
+        if (!$keywordLists) {
             $keywordLists = array('mysql', 'pgsql', 'sqlite', 'oracle', 'mssql');
         }
 
         $keywords = array();
-        foreach ($keywordLists as $keywordList) {
+        foreach ($keywordLists AS $keywordList) {
             if (!isset($this->keywordListClasses[$keywordList])) {
                 throw new \InvalidArgumentException(
                     "There exists no keyword list with name '" . $keywordList . "'. ".
@@ -125,7 +125,7 @@ EOT
             $output->write("No reserved keywords violations have been found!", true);
         } else {
             $output->write('There are <error>' . count($violations) . '</error> reserved keyword violations in your database schema:', true);
-            foreach ($violations as $violation) {
+            foreach ($violations AS $violation) {
                 $output->write('  - ' . $violation, true);
             }
         }

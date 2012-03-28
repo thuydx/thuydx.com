@@ -61,7 +61,7 @@ class SQLParserUtils
                 } else {
                     $name = "";
                     // TODO: Something faster/better to match this than regex?
-                    for ($j = $i; ($j < $stmtLen && preg_match('(([:a-zA-Z0-9_]{1}))', $statement[$j])); $j++) {
+                    for ($j = $i; ($j < $stmtLen && preg_match('(([:a-zA-Z0-9]{1}))', $statement[$j])); $j++) {
                         $name .= $statement[$j];
                     }
                     $paramMap[$name][] = $i; // named parameters can be duplicated!
@@ -88,9 +88,9 @@ class SQLParserUtils
         $isPositional = is_int(key($params));
         $arrayPositions = array();
         $bindIndex = -1;
-        foreach ($types as $name => $type) {
+        foreach ($types AS $name => $type) {
             ++$bindIndex;
-            if ($type === Connection::PARAM_INT_ARRAY || $type === Connection::PARAM_STR_ARRAY) {
+            if ($type === Connection::PARAM_INT_ARRAY || $type == Connection::PARAM_STR_ARRAY) {
                 if ($isPositional) {
                     $name = $bindIndex;
                 }
@@ -107,7 +107,7 @@ class SQLParserUtils
         if ($isPositional) {
             $paramOffset = 0;
             $queryOffset = 0;
-            foreach ($paramPos as $needle => $needlePos) {
+            foreach ($paramPos AS $needle => $needlePos) {
                 if (!isset($arrayPositions[$needle])) {
                     continue;
                 }

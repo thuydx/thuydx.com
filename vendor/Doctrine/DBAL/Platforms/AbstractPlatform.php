@@ -198,20 +198,6 @@ abstract class AbstractPlatform
         }
     }
 
-    /**
-     * Get the SQL Snippet to create a GUID/UUID field.
-     *
-     * By default this maps directly to a VARCHAR and only maps to more
-     * special datatypes when the underlying databases support this datatype.
-     *
-     * @param array $field
-     * @return string
-     */
-    public function getGuidTypeDeclartionSQL(array $field)
-    {
-        return $this->getVarcharTypeDeclarationSQL($field);
-    }
-
     protected function getVarcharTypeDeclarationSQLSnippet($length, $fixed)
     {
         throw DBALException::notSupported('VARCHARs not supported by Platform.');
@@ -522,20 +508,10 @@ abstract class AbstractPlatform
     }
 
     /**
-     * Returns the squared value of a column
-     *
-     * @param string $column    the column to use
-     * @return string           generated sql including an SQRT aggregate function
-     */
-    public function getSqrtExpression($column)
-    {
-        return 'SQRT(' . $column . ')';
-    }
-
-    /**
      * Rounds a numeric field to the number of decimals specified.
      *
      * @param string $expression1
+     * @param string $expression2
      * @return string
      */
     public function getRoundExpression($column, $decimals = 0)
@@ -727,7 +703,7 @@ abstract class AbstractPlatform
         $values = $this->getIdentifiers($values);
 
         if (count($values) == 0) {
-            throw new \InvalidArgumentException('Values must not be empty.');
+            throw \InvalidArgumentException('Values must not be empty.');
         }
         return $column . ' IN (' . implode(', ', $values) . ')';
     }
@@ -1048,11 +1024,10 @@ abstract class AbstractPlatform
         $options['primary'] = array();
 
         if (($createFlags&self::CREATE_INDEXES) > 0) {
-            foreach ($table->getIndexes() as $index) {
+            foreach ($table->getIndexes() AS $index) {
                 /* @var $index Index */
                 if ($index->isPrimary()) {
                     $options['primary'] = $index->getColumns();
-                    $options['primary_index'] = $index;
                 } else {
                     $options['indexes'][$index->getName()] = $index;
                 }
@@ -1061,7 +1036,7 @@ abstract class AbstractPlatform
 
         $columnSql = array();
         $columns = array();
-        foreach ($table->getColumns() as $column) {
+        foreach ($table->getColumns() AS $column) {
             /* @var \Doctrine\DBAL\Schema\Column $column */
 
             if (null !== $this->_eventManager && $this->_eventManager->hasListeners(Events::onSchemaCreateTableColumn)) {
@@ -1103,7 +1078,7 @@ abstract class AbstractPlatform
 
         if (($createFlags&self::CREATE_FOREIGNKEYS) > 0) {
             $options['foreignKeys'] = array();
-            foreach ($table->getForeignKeys() as $fkConstraint) {
+            foreach ($table->getForeignKeys() AS $fkConstraint) {
                 $options['foreignKeys'][] = $fkConstraint;
             }
         }
@@ -1119,7 +1094,7 @@ abstract class AbstractPlatform
 
         $sql = $this->_getCreateTableSQL($tableName, $columns, $options);
         if ($this->supportsCommentOnStatement()) {
-            foreach ($table->getColumns() as $column) {
+            foreach ($table->getColumns() AS $column) {
                 if ($this->getColumnComment($column)) {
                     $sql[] = $this->getCommentOnColumnSQL($tableName, $column->getName(), $this->getColumnComment($column));
                 }
@@ -1171,7 +1146,7 @@ abstract class AbstractPlatform
         $sql[] = $query;
 
         if (isset($options['foreignKeys'])) {
-            foreach ((array) $options['foreignKeys'] as $definition) {
+            foreach ((array) $options['foreignKeys'] AS $definition) {
                 $sql[] = $this->getCreateForeignKeySQL($definition, $tableName);
             }
         }
@@ -1242,7 +1217,7 @@ abstract class AbstractPlatform
             $query .= ' FOREIGN KEY';
 
             $foreignColumns = array();
-            foreach ($constraint->getForeignColumns() as $column) {
+            foreach ($constraint->getForeignColumns() AS $column) {
                 $foreignColumns[] = $column;
             }
 
@@ -1275,27 +1250,16 @@ abstract class AbstractPlatform
         if ($index->isPrimary()) {
             return $this->getCreatePrimaryKeySQL($index, $table);
         } else {
+            $type = '';
+            if ($index->isUnique()) {
+                $type = 'UNIQUE ';
+            }
 
-            $query = 'CREATE ' . $this->getCreateIndexSQLFlags($index) . 'INDEX ' . $name . ' ON ' . $table;
+            $query = 'CREATE ' . $type . 'INDEX ' . $name . ' ON ' . $table;
             $query .= ' (' . $this->getIndexFieldDeclarationListSQL($columns) . ')';
         }
 
         return $query;
-    }
-
-    /**
-     * Adds additional flags for index generation
-     *
-     * @param Index $index
-     * @return string
-     */
-    protected function getCreateIndexSQLFlags(Index $index)
-    {
-        $type = '';
-        if ($index->isUnique()) {
-            $type = 'UNIQUE ';
-        }
-        return $type;
     }
 
     /**
@@ -1387,7 +1351,7 @@ abstract class AbstractPlatform
             return false;
         }
 
-        if ( ! $this->_eventManager->hasListeners(Events::onSchemaAlterTableAddColumn)) {
+        if (!$this->_eventManager->hasListeners(Events::onSchemaAlterTableAddColumn)) {
             return false;
         }
 
@@ -1410,7 +1374,7 @@ abstract class AbstractPlatform
             return false;
         }
 
-        if ( ! $this->_eventManager->hasListeners(Events::onSchemaAlterTableRemoveColumn)) {
+        if (!$this->_eventManager->hasListeners(Events::onSchemaAlterTableRemoveColumn)) {
             return false;
         }
 
@@ -1433,7 +1397,7 @@ abstract class AbstractPlatform
             return false;
         }
 
-        if ( ! $this->_eventManager->hasListeners(Events::onSchemaAlterTableChangeColumn)) {
+        if (!$this->_eventManager->hasListeners(Events::onSchemaAlterTableChangeColumn)) {
             return false;
         }
 
@@ -1457,7 +1421,7 @@ abstract class AbstractPlatform
             return false;
         }
 
-        if ( ! $this->_eventManager->hasListeners(Events::onSchemaAlterTableRenameColumn)) {
+        if (!$this->_eventManager->hasListeners(Events::onSchemaAlterTableRenameColumn)) {
             return false;
         }
 
@@ -1478,7 +1442,7 @@ abstract class AbstractPlatform
             return false;
         }
 
-        if ( ! $this->_eventManager->hasListeners(Events::onSchemaAlterTable)) {
+        if (!$this->_eventManager->hasListeners(Events::onSchemaAlterTable)) {
             return false;
         }
 
@@ -1496,18 +1460,18 @@ abstract class AbstractPlatform
 
         $sql = array();
         if ($this->supportsForeignKeyConstraints()) {
-            foreach ($diff->removedForeignKeys as $foreignKey) {
+            foreach ($diff->removedForeignKeys AS $foreignKey) {
                 $sql[] = $this->getDropForeignKeySQL($foreignKey, $tableName);
             }
-            foreach ($diff->changedForeignKeys as $foreignKey) {
+            foreach ($diff->changedForeignKeys AS $foreignKey) {
                 $sql[] = $this->getDropForeignKeySQL($foreignKey, $tableName);
             }
         }
 
-        foreach ($diff->removedIndexes as $index) {
+        foreach ($diff->removedIndexes AS $index) {
             $sql[] = $this->getDropIndexSQL($index, $tableName);
         }
-        foreach ($diff->changedIndexes as $index) {
+        foreach ($diff->changedIndexes AS $index) {
             $sql[] = $this->getDropIndexSQL($index, $tableName);
         }
 
@@ -1524,18 +1488,18 @@ abstract class AbstractPlatform
 
         $sql = array();
         if ($this->supportsForeignKeyConstraints()) {
-            foreach ($diff->addedForeignKeys as $foreignKey) {
+            foreach ($diff->addedForeignKeys AS $foreignKey) {
                 $sql[] = $this->getCreateForeignKeySQL($foreignKey, $tableName);
             }
-            foreach ($diff->changedForeignKeys as $foreignKey) {
+            foreach ($diff->changedForeignKeys AS $foreignKey) {
                 $sql[] = $this->getCreateForeignKeySQL($foreignKey, $tableName);
             }
         }
 
-        foreach ($diff->addedIndexes as $index) {
+        foreach ($diff->addedIndexes AS $index) {
             $sql[] = $this->getCreateIndexSQL($index, $tableName);
         }
-        foreach ($diff->changedIndexes as $index) {
+        foreach ($diff->changedIndexes AS $index) {
             $sql[] = $this->getCreateIndexSQL($index, $tableName);
         }
 
@@ -1691,6 +1655,7 @@ abstract class AbstractPlatform
                     $default = " DEFAULT ".$field['default'];
                 } else if ((string)$field['type'] == 'DateTime' && $field['default'] == $this->getCurrentTimestampSQL()) {
                     $default = " DEFAULT ".$this->getCurrentTimestampSQL();
+
                 } else if ((string) $field['type'] == 'Boolean') {
                     $default = " DEFAULT '" . $this->convertBooleans($field['default']) . "'";
                 }
@@ -1738,7 +1703,7 @@ abstract class AbstractPlatform
     public function getUniqueConstraintDeclarationSQL($name, Index $index)
     {
         if (count($index->getColumns()) == 0) {
-            throw new \InvalidArgumentException("Incomplete definition. 'columns' required.");
+            throw \InvalidArgumentException("Incomplete definition. 'columns' required.");
         }
 
         return 'CONSTRAINT ' . $name . ' UNIQUE ('
@@ -1763,7 +1728,7 @@ abstract class AbstractPlatform
         }
 
         if (count($index->getColumns()) == 0) {
-            throw new \InvalidArgumentException("Incomplete definition. 'columns' required.");
+            throw \InvalidArgumentException("Incomplete definition. 'columns' required.");
         }
 
         return $type . 'INDEX ' . $name . ' ('
@@ -2447,16 +2412,6 @@ abstract class AbstractPlatform
     }
 
     /**
-     * Does this platform views ?
-     *
-     * @return boolean
-     */
-    public function supportsViews()
-    {
-        return true;
-    }
-
-    /**
      * Gets the format string, as accepted by the date() function, that describes
      * the format of a stored datetime value of this platform.
      *
@@ -2672,7 +2627,7 @@ abstract class AbstractPlatform
     {
         $class = $this->getReservedKeywordsClass();
         $keywords = new $class;
-        if ( ! $keywords instanceof \Doctrine\DBAL\Platforms\Keywords\KeywordList) {
+        if (!$keywords instanceof \Doctrine\DBAL\Platforms\Keywords\KeywordList) {
             throw DBALException::notSupported(__METHOD__);
         }
         return $keywords;

@@ -354,7 +354,7 @@ class OraclePlatform extends AbstractPlatform
         }
 
         if (isset($indexes) && ! empty($indexes)) {
-            foreach ($indexes as $index) {
+            foreach ($indexes as $indexName => $index) {
                 $sql[] = $this->getCreateIndexSQL($index, $table);
             }
         }
@@ -408,6 +408,10 @@ class OraclePlatform extends AbstractPlatform
         $sql   = array();
 
         $indexName  = $table . '_AI_PK';
+        $definition = array(
+            'primary' => true,
+            'columns' => array($name => true),
+        );
 
         $idx = new \Doctrine\DBAL\Schema\Index($indexName, array($name), true, true);
 
@@ -568,7 +572,7 @@ LEFT JOIN user_cons_columns r_cols
         $columnSql = array();
 
         $fields = array();
-        foreach ($diff->addedColumns as $column) {
+        foreach ($diff->addedColumns AS $column) {
             if ($this->onSchemaAlterTableAddColumn($column, $diff, $columnSql)) {
                 continue;
             }
@@ -583,7 +587,7 @@ LEFT JOIN user_cons_columns r_cols
         }
 
         $fields = array();
-        foreach ($diff->changedColumns as $columnDiff) {
+        foreach ($diff->changedColumns AS $columnDiff) {
             if ($this->onSchemaAlterTableChangeColumn($columnDiff, $diff, $columnSql)) {
                 continue;
             }
@@ -598,7 +602,7 @@ LEFT JOIN user_cons_columns r_cols
             $sql[] = 'ALTER TABLE ' . $diff->name . ' MODIFY (' . implode(', ', $fields) . ')';
         }
 
-        foreach ($diff->renamedColumns as $oldColumnName => $column) {
+        foreach ($diff->renamedColumns AS $oldColumnName => $column) {
             if ($this->onSchemaAlterTableRenameColumn($oldColumnName, $column, $diff, $columnSql)) {
                 continue;
             }
@@ -607,7 +611,7 @@ LEFT JOIN user_cons_columns r_cols
         }
 
         $fields = array();
-        foreach ($diff->removedColumns as $column) {
+        foreach ($diff->removedColumns AS $column) {
             if ($this->onSchemaAlterTableRemoveColumn($column, $diff, $columnSql)) {
                 continue;
             }
@@ -620,7 +624,7 @@ LEFT JOIN user_cons_columns r_cols
 
         $tableSql = array();
 
-        if ( ! $this->onSchemaAlterTable($diff, $tableSql)) {
+        if (!$this->onSchemaAlterTable($diff, $tableSql)) {
             if ($diff->newName !== false) {
                 $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME TO ' . $diff->newName;
             }
